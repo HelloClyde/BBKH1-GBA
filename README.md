@@ -78,17 +78,19 @@ Source code ZIP 不包含子模块。完整源码包可直接构建，依赖版�
 
 ## 截图
 
-以下为本项目发布构建的真实帧缓冲截图。测试使用原创 homebrew ROM，菜单与画面没有使用效果图。
+游戏画面由用户提供，展示 GBA《精灵宝可梦 绿宝石》的标题与游戏场景。
+
+| GBA 游戏标题画面 | GBA 游戏运行画面 |
+| --- | --- |
+| ![精灵宝可梦绿宝石标题画面](assets/screenshots/gba-emerald-title.png) | ![精灵宝可梦绿宝石运行画面](assets/screenshots/gba-emerald-gameplay.png) |
+
+以下菜单截图来自发布构建在完整 H1 固件模拟器中的实际帧缓冲，使用原创 homebrew ROM 测试。
 
 | 触摸暂停菜单（完整 H1 固件模拟器） | 显示设置（完整 H1 固件模拟器） |
 | --- | --- |
 | ![暂停菜单](assets/screenshots/pause-menu.png) | ![显示设置](assets/screenshots/display-options.png) |
 
-GB/GBC 测试画面：普通发布 BDA 在 Unicorn 中执行，H1 固件服务使用替身。
-
-![GB/GBC 测试画面](assets/screenshots/gbc-homebrew.png)
-
-截图、BDA 哈希及测试范围见 [发布验证记录](docs/release-v0.12.3.md)。
+菜单截图、发布 BDA 哈希及测试范围见 [发布验证记录](docs/release-v0.12.3.md)。
 
 ## 依赖
 

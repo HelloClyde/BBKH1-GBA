@@ -13,5 +13,21 @@
     "sha256": "6ae1d15061767ff4b733f6ef68aed8b86998d5fe4f7e7161eb423bf6bddbe835",
     "source": "actual normal BDA in Unicorn with mocked H1 services",
     "bda_sha256": "0bb0b44bc696baea72ba287ec53b5e2a40bbca81374c036c153e5782a1e79c87"
+  },
+  "gba-emerald-title.png": {
+    "sha256": "96db7feed806156cc6e887c28d148dc0a88e28068b37a6a9010d73be98f6924c",
+    "source": "user-provided original screenshot",
+    "platform": "GBA",
+    "game": "Pokemon Emerald",
+    "environment": "not specified by user",
+    "bda_sha256": null
+  },
+  "gba-emerald-gameplay.png": {
+    "sha256": "a24f2250217c291d0e86bb74877695502afc632c6f0dbc6d69b45cb5f24f01ab",
+    "source": "user-provided original screenshot",
+    "platform": "GBA",
+    "game": "Pokemon Emerald",
+    "environment": "not specified by user",
+    "bda_sha256": null
   }
 }

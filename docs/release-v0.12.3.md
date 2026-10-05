@@ -55,8 +55,10 @@ PCM 实际采集 8.016 秒（32000 Hz），非零样本，退出统计 dropped=0
 该次记录没有以“完全无欠载”作为结论。
 [性能包原生记录](evidence/native-profile.json)、[耗时统计](evidence/profile-accounting.json)。
 
-README 的暂停与显示设置截图来自上述性能 BDA 的实际帧缓冲，GBC 图像来自普通 BDA 在
-Unicorn 中运行原创 SM83 homebrew。图片 SHA-256 和来源见 [截图记录](evidence/screenshots.json)。
+暂停与显示设置截图来自上述性能 BDA 的实际帧缓冲，保留的 `gbc-homebrew.png` 来自普通
+BDA 在 Unicorn 中运行原创 SM83 homebrew。README 后续更新展示了用户提供的 GBA 绿宝石
+截图，未附版本与运行环境，不用于补充本次发布的验证结论。
+图片 SHA-256 和来源见 [截图记录](evidence/screenshots.json)。
 
 ## 验证边界
 

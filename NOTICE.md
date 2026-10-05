@@ -52,6 +52,10 @@ The touch-coordinate ABI was researched against H1 V1.41. Only interface facts
 and the project-local wrappers are included; the original app implementation,
 firmware, device dump, NAND, commercial ROMs and Nintendo BIOS are not supplied.
 
-Screenshots in `assets/screenshots/` depict the application running original
+`assets/screenshots/gba-emerald-title.png` and `gba-emerald-gameplay.png` were
+provided by the user and depict Pokemon Emerald (GBA). The depicted game art,
+characters and marks retain their respective owners' copyright and trademark
+rights; the project code's GPL license does not relicense them.
+Other project verification screenshots depict the application running original
 homebrew test programs. Historical screenshots and traces in the separately
 licensed upstream SDK remain covered by that SDK's NOTICE.

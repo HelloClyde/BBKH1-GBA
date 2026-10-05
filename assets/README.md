@@ -33,5 +33,9 @@ Get-FileHash .tools/NotoSansCJKsc-Regular.otf -Algorithm SHA256
 python tools/generate_menu_font.py --font .tools/NotoSansCJKsc-Regular.otf
 ```
 
-`screenshots/` 的图片为发布构建实测截图，来源与确切 BDA 哈希见
-`docs/release-v0.12.3.md`；第三方 SDK 中的截图仍遵循该 SDK 的 NOTICE。
+`screenshots/gba-emerald-title.png` 和 `gba-emerald-gameplay.png` 为用户提供的
+GBA《精灵宝可梦 绿宝石》截图，原图直接收录，没有修改。用户未附构建哈希或运行环境，
+不能据此认定是特定版本的测试结果。游戏画面版权归各自权利人，不适用项目代码的 GPL。
+
+其余截图为发布构建实测帧缓冲，来源与确切 BDA 哈希见 `docs/release-v0.12.3.md`。
+各截图的 SHA-256 和来源记录在 `docs/evidence/screenshots.json`；第三方 SDK 中的截图仍遵循该 SDK 的 NOTICE。
