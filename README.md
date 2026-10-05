@@ -84,6 +84,8 @@ Source code ZIP 不包含子模块。完整源码包可直接构建，依赖版�
 | --- | --- |
 | ![暂停菜单](assets/screenshots/pause-menu.png) | ![显示设置](assets/screenshots/display-options.png) |
 
+GB/GBC 测试画面：普通发布 BDA 在 Unicorn 中执行，H1 固件服务使用替身。
+
 ![GB/GBC 测试画面](assets/screenshots/gbc-homebrew.png)
 
 截图、BDA 哈希及测试范围见 [发布验证记录](docs/release-v0.12.3.md)。
