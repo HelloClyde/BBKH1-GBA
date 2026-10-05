@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "kind": "Actual MIPS combined BDA, mocked H1 firmware services",
+  "sha256": "02d06f425a04ae78a1ea6b143192df951c633739331c87b6f1e81fa5bb138da4",
+  "results": {
+    "gb": {
+      "colors": [
+        0,
+        14789,
+        31628,
+        46381,
+        59059
+      ],
+      "sram_bytes": 8192,
+      "blits": 10,
+      "audio_samples": 6625,
+      "restored": true
+    },
+    "gbc": {
+      "colors": [
+        0,
+        31,
+        2016,
+        63488,
+        65535
+      ],
+      "sram_bytes": 8224,
+      "blits": 10,
+      "audio_samples": 6625,
+      "restored": true
+    },
+    "cross_core_switch": {
+      "order": [
+        "GBA JIT",
+        "GB",
+        "GBC",
+        "GBA JIT"
+      ],
+      "ok": true
+    }
+  },
+  "bad_roms_rejected": 3,
+  "no_battery_no_save": true,
+  "changed_cartridge_save_preserved": true,
+  "small_SRAM_and_MBC2_mirroring": true,
+  "MBC3_RTC_day_bit_and_stop": true
+}

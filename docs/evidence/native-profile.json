@@ -1,0 +1,84 @@
+{
+  "environment": "qemu",
+  "bda_sha256": "92a921f8531782fcf7eebd019849c79f71a5c753edd8c03d4173870e12c0a586",
+  "qemu_sha256": "eebb8dceafd707c90d8dec761eecde6484d412cab040c1604f7cce3e2ae9f4d3",
+  "tcu_source_sha256": "b6889dd04e99f687df92fb46efb74c1603b949d8221f526258e46938edc64119",
+  "frames_before": 419,
+  "frames_after": 895,
+  "frames_paused": 896,
+  "frames_resumed": 1532,
+  "steady_seconds": 8,
+  "heartbeat_ram_count": null,
+  "linear_selected": true,
+  "audio_capture": {
+    "sample_rate": 32000,
+    "frames": 256512,
+    "seconds": 8.016,
+    "min": -3904,
+    "max": 3640,
+    "nonzero_samples": 513024,
+    "packets": 385
+  },
+  "before_tcu": {
+    "enabled": 0,
+    "stopped": 0,
+    "mask": 0,
+    "registers": [
+      10000,
+      10000,
+      0,
+      0
+    ]
+  },
+  "running_tcu": {
+    "enabled": 32,
+    "stopped": 0,
+    "mask": 2097184,
+    "registers": [
+      65535,
+      32767,
+      30253,
+      514
+    ]
+  },
+  "paused_tcu": {
+    "enabled": 0,
+    "stopped": 0,
+    "mask": 0,
+    "registers": [
+      10000,
+      10000,
+      0,
+      0
+    ]
+  },
+  "released_tcu": {
+    "enabled": 0,
+    "stopped": 0,
+    "mask": 0,
+    "registers": [
+      10000,
+      10000,
+      0,
+      0
+    ]
+  },
+  "status": {
+    "running": false,
+    "returncode": 0,
+    "last_error": null
+  },
+  "log_sha256": "ab141bdb8dce537970e11b17caa8720b2bfd57e776851b9ac978dee9c288b108",
+  "total_displays": 1020,
+  "display_errors": 0,
+  "nand_torn_records": 0,
+  "audio_close": {
+    "batches": 2042,
+    "submitted": 3,
+    "nonzero": 1092394,
+    "dropped": 0,
+    "failures": 0,
+    "underruns": 1
+  },
+  "MXU_selftest": "MXU1_Q8 selftest=1"
+}

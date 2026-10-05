@@ -1,0 +1,9 @@
+[submodule "vendor/h1-sdk"]
+	path = vendor/h1-sdk
+	url = https://github.com/MrDefinition1999/bbk-h1-bda-sdk.git
+[submodule "third_party/gpsp"]
+	path = third_party/gpsp
+	url = https://github.com/libretro/gpsp.git
+[submodule "third_party/gnuboy"]
+	path = third_party/gnuboy
+	url = https://github.com/rofl0r/gnuboy.git

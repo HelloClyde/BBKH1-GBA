@@ -1,0 +1,108 @@
+name: Build and release H1 GameBoy
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  host-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - run: python tests/run_platform_tests.py
+
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Dependencies and fixed toolchain
+        run: |
+          $ErrorActionPreference = 'Stop'
+          python -m pip install -r requirements.txt
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          python tools/install_toolchain.py
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - name: Build normal and profile packages
+        run: |
+          python tools/build.py --toolchain .tools/toolchain/bin
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          python tools/build.py --toolchain .tools/toolchain/bin --profile
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          python tools/build.py --toolchain .tools/toolchain/bin --test-frames 20
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          python tools/verify_release.py
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - name: Execute actual MIPS binaries with mocked firmware
+        run: |
+          $tests = @(
+            @('tests/mips_smoke.py', '--bda', 'dist/H1GBA.bda', '--menu'),
+            @('tests/pause_menu_smoke.py', '--bda', 'dist/H1GBA.bda', '--map', 'build/release/H1GBA.map'),
+            @('tests/linear_mxu_smoke.py', '--bda', 'dist/H1GBA.bda'),
+            @('tests/audio_smoke.py'),
+            @('tests/gb_smoke.py'),
+            @('tests/rtc_smoke.py')
+          )
+          foreach ($arguments in $tests) {
+            python @arguments
+            if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          }
+      - name: Require previously recorded runtime validation for tags
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          if ($env:GITHUB_REF_NAME -ne 'v0.12.3') { throw 'Tag does not match this release version' }
+          python tools/verify_release.py --require-verified
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - name: Package installer, full source, metadata and checksums
+        run: |
+          python tools/package_release.py --version v0.12.3
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: H1-GameBoy-release
+          path: dist/release/*
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [host-tests, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: H1-GameBoy-release
+          path: dist/release
+      - name: Verify downloaded assets and publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd dist/release
+          sha256sum --check SHA256SUMS.txt
+          cd ../..
+          python tools/publish_release.py

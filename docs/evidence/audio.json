@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "kind": "MIPS with mocked PCM services",
+  "delayed": {
+    "blocks": 1,
+    "min": -8192,
+    "max": 7168
+  },
+  "stalled": {
+    "blocks": 1,
+    "min": -8192,
+    "max": 7168
+  }
+}

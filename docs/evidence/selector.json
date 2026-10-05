@@ -1,0 +1,36 @@
+{
+  "ok": true,
+  "kind": "MIPS BDA with mocked firmware service tables",
+  "menu": true,
+  "runs": 2,
+  "seconds": [
+    2.94,
+    2.81
+  ],
+  "blits": [
+    10,
+    10
+  ],
+  "loading_bar_widths": [
+    11,
+    76,
+    266,
+    285,
+    361,
+    380
+  ],
+  "assertions": [
+    "BDA return",
+    "host stack/register preservation",
+    "RGB565 colors",
+    "A press/release",
+    "SRAM persisted",
+    "CRC",
+    "save restored",
+    "native selector args",
+    "cancel",
+    "GBK Chinese path",
+    "ROM switch",
+    "no leaked handles/allocations"
+  ]
+}

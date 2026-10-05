@@ -1,0 +1,304 @@
+{
+  "ok": true,
+  "environment": "qemu",
+  "bda_sha256": "0bb0b44bc696baea72ba287ec53b5e2a40bbca81374c036c153e5782a1e79c87",
+  "gui_api": "0x9D8",
+  "mapping_ui": true,
+  "cores": [
+    {
+      "core": "gba",
+      "steps": [
+        {
+          "step": "released",
+          "state": {
+            "mask": 0,
+            "keyinput": 1023
+          }
+        },
+        {
+          "step": "D down",
+          "state": {
+            "mask": 128,
+            "keyinput": 1007
+          }
+        },
+        {
+          "step": "K while D",
+          "state": {
+            "mask": 384,
+            "keyinput": 1006
+          }
+        },
+        {
+          "step": "release K keep D",
+          "state": {
+            "mask": 128,
+            "keyinput": 1007
+          }
+        },
+        {
+          "step": "K while D again",
+          "state": {
+            "mask": 384,
+            "keyinput": 1006
+          }
+        },
+        {
+          "step": "release D keep K",
+          "state": {
+            "mask": 256,
+            "keyinput": 1022
+          }
+        },
+        {
+          "step": "release K",
+          "state": {
+            "mask": 0,
+            "keyinput": 1023
+          }
+        },
+        {
+          "step": "K first",
+          "state": {
+            "mask": 256,
+            "keyinput": 1022
+          }
+        },
+        {
+          "step": "D while K",
+          "state": {
+            "mask": 384,
+            "keyinput": 1006
+          }
+        },
+        {
+          "step": "release K keep D reversed",
+          "state": {
+            "mask": 128,
+            "keyinput": 1007
+          }
+        },
+        {
+          "step": "release D",
+          "state": {
+            "mask": 0,
+            "keyinput": 1023
+          }
+        }
+      ]
+    },
+    {
+      "core": "gb",
+      "steps": [
+        {
+          "step": "released",
+          "state": {
+            "mask": 0,
+            "cartridge_ram": "5a11ef4200000000",
+            "a": false,
+            "right": false
+          }
+        },
+        {
+          "step": "D down",
+          "state": {
+            "mask": 128,
+            "cartridge_ram": "5a11ee4200000000",
+            "a": false,
+            "right": true
+          }
+        },
+        {
+          "step": "K while D",
+          "state": {
+            "mask": 384,
+            "cartridge_ram": "5aa5ee4200000000",
+            "a": true,
+            "right": true
+          }
+        },
+        {
+          "step": "release K keep D",
+          "state": {
+            "mask": 128,
+            "cartridge_ram": "5a11ee4200000000",
+            "a": false,
+            "right": true
+          }
+        },
+        {
+          "step": "K while D again",
+          "state": {
+            "mask": 384,
+            "cartridge_ram": "5aa5ee4200000000",
+            "a": true,
+            "right": true
+          }
+        },
+        {
+          "step": "release D keep K",
+          "state": {
+            "mask": 256,
+            "cartridge_ram": "5aa5ef4200000000",
+            "a": true,
+            "right": false
+          }
+        },
+        {
+          "step": "release K",
+          "state": {
+            "mask": 0,
+            "cartridge_ram": "5a11ef4200000000",
+            "a": false,
+            "right": false
+          }
+        },
+        {
+          "step": "K first",
+          "state": {
+            "mask": 256,
+            "cartridge_ram": "5aa5ef4200000000",
+            "a": true,
+            "right": false
+          }
+        },
+        {
+          "step": "D while K",
+          "state": {
+            "mask": 384,
+            "cartridge_ram": "5aa5ee4200000000",
+            "a": true,
+            "right": true
+          }
+        },
+        {
+          "step": "release K keep D reversed",
+          "state": {
+            "mask": 128,
+            "cartridge_ram": "5a11ee4200000000",
+            "a": false,
+            "right": true
+          }
+        },
+        {
+          "step": "release D",
+          "state": {
+            "mask": 0,
+            "cartridge_ram": "5a11ef4200000000",
+            "a": false,
+            "right": false
+          }
+        }
+      ]
+    },
+    {
+      "core": "gbc",
+      "steps": [
+        {
+          "step": "released",
+          "state": {
+            "mask": 0,
+            "cartridge_ram": "5a11ef4200000000",
+            "a": false,
+            "right": false
+          }
+        },
+        {
+          "step": "D down",
+          "state": {
+            "mask": 128,
+            "cartridge_ram": "5a11ee4200000000",
+            "a": false,
+            "right": true
+          }
+        },
+        {
+          "step": "K while D",
+          "state": {
+            "mask": 384,
+            "cartridge_ram": "5aa5ee4200000000",
+            "a": true,
+            "right": true
+          }
+        },
+        {
+          "step": "release K keep D",
+          "state": {
+            "mask": 128,
+            "cartridge_ram": "5a11ee4200000000",
+            "a": false,
+            "right": true
+          }
+        },
+        {
+          "step": "K while D again",
+          "state": {
+            "mask": 384,
+            "cartridge_ram": "5aa5ee4200000000",
+            "a": true,
+            "right": true
+          }
+        },
+        {
+          "step": "release D keep K",
+          "state": {
+            "mask": 256,
+            "cartridge_ram": "5aa5ef4200000000",
+            "a": true,
+            "right": false
+          }
+        },
+        {
+          "step": "release K",
+          "state": {
+            "mask": 0,
+            "cartridge_ram": "5a11ef4200000000",
+            "a": false,
+            "right": false
+          }
+        },
+        {
+          "step": "K first",
+          "state": {
+            "mask": 256,
+            "cartridge_ram": "5aa5ef4200000000",
+            "a": true,
+            "right": false
+          }
+        },
+        {
+          "step": "D while K",
+          "state": {
+            "mask": 384,
+            "cartridge_ram": "5aa5ee4200000000",
+            "a": true,
+            "right": true
+          }
+        },
+        {
+          "step": "release K keep D reversed",
+          "state": {
+            "mask": 128,
+            "cartridge_ram": "5a11ee4200000000",
+            "a": false,
+            "right": true
+          }
+        },
+        {
+          "step": "release D",
+          "state": {
+            "mask": 0,
+            "cartridge_ram": "5a11ef4200000000",
+            "a": false,
+            "right": false
+          }
+        }
+      ]
+    }
+  ],
+  "status": {
+    "running": false,
+    "returncode": 0,
+    "last_error": null
+  }
+}

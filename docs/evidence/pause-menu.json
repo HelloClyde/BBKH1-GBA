@@ -1,0 +1,38 @@
+{
+  "ok": true,
+  "bda": "dist\\H1GBA.bda",
+  "sha256": "0bb0b44bc696baea72ba287ec53b5e2a40bbca81374c036c153e5782a1e79c87",
+  "core": "jit",
+  "empty_corrupt_preserved": true,
+  "P_keyboard_menu": true,
+  "touch_drag_cancelled": true,
+  "results": [
+    {
+      "kind": "gba",
+      "seconds": 5.64,
+      "menu_events": 37,
+      "paused_cpu_ram_stable": true,
+      "cpu_ram_sram_restored": true,
+      "config_reopened": true,
+      "blits": 5
+    },
+    {
+      "kind": "gb",
+      "seconds": 25.09,
+      "menu_events": 37,
+      "paused_cpu_ram_stable": true,
+      "cpu_ram_sram_restored": true,
+      "config_reopened": true,
+      "blits": 5
+    },
+    {
+      "kind": "gbc",
+      "seconds": 23.92,
+      "menu_events": 37,
+      "paused_cpu_ram_stable": true,
+      "cpu_ram_sram_restored": true,
+      "config_reopened": true,
+      "blits": 5
+    }
+  ]
+}

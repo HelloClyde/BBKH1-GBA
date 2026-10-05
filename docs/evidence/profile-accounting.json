@@ -1,0 +1,699 @@
+{
+  "log": "private original; SHA256 in native-profile.json",
+  "environment": "qemu",
+  "segments": [
+    {
+      "rom": "A:\\GBA\\AUDIO.gba",
+      "reason": "pause",
+      "settings": {
+        "scale": 1,
+        "skip": 1,
+        "sound": 1
+      },
+      "clock_source": "TCU5_RTC",
+      "logged_count_hz": 32768,
+      "count_hz": 32768,
+      "clock_override": false,
+      "windows": [
+        {
+          "index": 0,
+          "frames": 300,
+          "displayed": 149,
+          "elapsed_us": 4908386,
+          "core_mean_us": 1525,
+          "core_max_us": 5187,
+          "core_p95_bin_ms": 2,
+          "over_16_743ms": 0,
+          "loop_under_2ms": 30,
+          "loop_over_25ms": 156,
+          "costs": {
+            "core_cpu_events": {
+              "ticks": 8926,
+              "calls": 300
+            },
+            "ppu_render": {
+              "ticks": 2838,
+              "calls": 48000
+            },
+            "core_audio": {
+              "ticks": 362,
+              "calls": 606
+            },
+            "screen_output": {
+              "ticks": 2568,
+              "calls": 300
+            },
+            "pcm_resample": {
+              "ticks": 241,
+              "calls": 300
+            },
+            "input_poll": {
+              "ticks": 10475,
+              "calls": 600
+            },
+            "rom_io": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "jit_cache_sync": {
+              "ticks": 0,
+              "calls": 4
+            },
+            "save_checkpoint": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "pacing_wait": {
+              "ticks": 135369,
+              "calls": 1916390
+            },
+            "loop_other": {
+              "ticks": 59,
+              "calls": 300
+            }
+          },
+          "video_detail": {
+            "window": 0,
+            "frames": 149,
+            "buffer_ticks": 19,
+            "scale_ticks": 2507
+          }
+        },
+        {
+          "index": 1,
+          "frames": 300,
+          "displayed": 150,
+          "elapsed_us": 5026458,
+          "core_mean_us": 1495,
+          "core_max_us": 3204,
+          "core_p95_bin_ms": 2,
+          "over_16_743ms": 0,
+          "loop_under_2ms": 23,
+          "loop_over_25ms": 161,
+          "costs": {
+            "core_cpu_events": {
+              "ticks": 8870,
+              "calls": 300
+            },
+            "ppu_render": {
+              "ticks": 2762,
+              "calls": 48000
+            },
+            "core_audio": {
+              "ticks": 311,
+              "calls": 600
+            },
+            "screen_output": {
+              "ticks": 2628,
+              "calls": 300
+            },
+            "pcm_resample": {
+              "ticks": 215,
+              "calls": 300
+            },
+            "input_poll": {
+              "ticks": 10953,
+              "calls": 600
+            },
+            "rom_io": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "jit_cache_sync": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "save_checkpoint": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "pacing_wait": {
+              "ticks": 138897,
+              "calls": 1944617
+            },
+            "loop_other": {
+              "ticks": 71,
+              "calls": 300
+            }
+          },
+          "video_detail": {
+            "window": 1,
+            "frames": 150,
+            "buffer_ticks": 14,
+            "scale_ticks": 2572
+          }
+        },
+        {
+          "index": 2,
+          "frames": 296,
+          "displayed": 148,
+          "elapsed_us": 4997619,
+          "core_mean_us": 1403,
+          "core_max_us": 2746,
+          "core_p95_bin_ms": 2,
+          "over_16_743ms": 0,
+          "loop_under_2ms": 36,
+          "loop_over_25ms": 154,
+          "costs": {
+            "core_cpu_events": {
+              "ticks": 8435,
+              "calls": 296
+            },
+            "ppu_render": {
+              "ticks": 2506,
+              "calls": 47360
+            },
+            "core_audio": {
+              "ticks": 253,
+              "calls": 592
+            },
+            "screen_output": {
+              "ticks": 2391,
+              "calls": 296
+            },
+            "pcm_resample": {
+              "ticks": 174,
+              "calls": 296
+            },
+            "input_poll": {
+              "ticks": 9740,
+              "calls": 592
+            },
+            "rom_io": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "jit_cache_sync": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "save_checkpoint": {
+              "ticks": 5775,
+              "calls": 1
+            },
+            "pacing_wait": {
+              "ticks": 134417,
+              "calls": 2002537
+            },
+            "loop_other": {
+              "ticks": 71,
+              "calls": 296
+            }
+          },
+          "video_detail": {
+            "window": 2,
+            "frames": 148,
+            "buffer_ticks": 15,
+            "scale_ticks": 2348
+          }
+        }
+      ],
+      "summary": {
+        "frames": 896,
+        "displayed": 447,
+        "measured_loop_seconds": 14.932465,
+        "logic_fps": 60.003,
+        "core_mean_ms": 1.474652,
+        "core_max_ms": 5.187,
+        "costs": {
+          "core_cpu_events": {
+            "ticks": 26231,
+            "calls": 896,
+            "ms_per_frame": 0.893423,
+            "loop_percent": 5.361,
+            "active_percent": 35.14
+          },
+          "ppu_render": {
+            "ticks": 8106,
+            "calls": 143360,
+            "ms_per_frame": 0.276089,
+            "loop_percent": 1.657,
+            "active_percent": 10.859
+          },
+          "core_audio": {
+            "ticks": 926,
+            "calls": 1798,
+            "ms_per_frame": 0.031539,
+            "loop_percent": 0.189,
+            "active_percent": 1.24
+          },
+          "screen_output": {
+            "ticks": 7587,
+            "calls": 896,
+            "ms_per_frame": 0.258412,
+            "loop_percent": 1.551,
+            "active_percent": 10.164
+          },
+          "pcm_resample": {
+            "ticks": 630,
+            "calls": 896,
+            "ms_per_frame": 0.021458,
+            "loop_percent": 0.129,
+            "active_percent": 0.844
+          },
+          "input_poll": {
+            "ticks": 31168,
+            "calls": 1792,
+            "ms_per_frame": 1.061576,
+            "loop_percent": 6.37,
+            "active_percent": 41.753
+          },
+          "rom_io": {
+            "ticks": 0,
+            "calls": 0,
+            "ms_per_frame": 0.0,
+            "loop_percent": 0.0,
+            "active_percent": 0.0
+          },
+          "jit_cache_sync": {
+            "ticks": 0,
+            "calls": 4,
+            "ms_per_frame": 0.0,
+            "loop_percent": 0.0,
+            "active_percent": 0.0
+          },
+          "save_checkpoint": {
+            "ticks": 5775,
+            "calls": 1,
+            "ms_per_frame": 0.196695,
+            "loop_percent": 1.18,
+            "active_percent": null
+          },
+          "pacing_wait": {
+            "ticks": 408683,
+            "calls": 5863544,
+            "ms_per_frame": 13.91966,
+            "loop_percent": 83.523,
+            "active_percent": null
+          },
+          "loop_other": {
+            "ticks": 201,
+            "calls": 896,
+            "ms_per_frame": 0.006846,
+            "loop_percent": 0.041,
+            "active_percent": null
+          }
+        },
+        "video_detail": {
+          "displayed": 447,
+          "buffer_ms_per_display": 0.003277,
+          "scale_ms_per_display": 0.507056
+        }
+      }
+    },
+    {
+      "rom": "A:\\GBA\\AUDIO.gba",
+      "reason": "exit",
+      "settings": {
+        "scale": 3,
+        "skip": 1,
+        "sound": 1
+      },
+      "clock_source": "TCU5_RTC",
+      "logged_count_hz": 32768,
+      "count_hz": 32768,
+      "clock_override": false,
+      "windows": [
+        {
+          "index": 0,
+          "frames": 300,
+          "displayed": 150,
+          "elapsed_us": 4906982,
+          "core_mean_us": 2502,
+          "core_max_us": 4943,
+          "core_p95_bin_ms": 4,
+          "over_16_743ms": 0,
+          "loop_under_2ms": 32,
+          "loop_over_25ms": 147,
+          "costs": {
+            "core_cpu_events": {
+              "ticks": 8616,
+              "calls": 300
+            },
+            "ppu_render": {
+              "ticks": 2661,
+              "calls": 48000
+            },
+            "core_audio": {
+              "ticks": 326,
+              "calls": 600
+            },
+            "screen_output": {
+              "ticks": 13015,
+              "calls": 300
+            },
+            "pcm_resample": {
+              "ticks": 191,
+              "calls": 300
+            },
+            "input_poll": {
+              "ticks": 10230,
+              "calls": 600
+            },
+            "rom_io": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "jit_cache_sync": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "save_checkpoint": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "pacing_wait": {
+              "ticks": 125687,
+              "calls": 1869951
+            },
+            "loop_other": {
+              "ticks": 66,
+              "calls": 300
+            }
+          },
+          "video_detail": {
+            "window": 0,
+            "frames": 150,
+            "buffer_ticks": 30,
+            "scale_ticks": 12950
+          }
+        },
+        {
+          "index": 1,
+          "frames": 300,
+          "displayed": 150,
+          "elapsed_us": 5023101,
+          "core_mean_us": 2532,
+          "core_max_us": 4730,
+          "core_p95_bin_ms": 4,
+          "over_16_743ms": 0,
+          "loop_under_2ms": 21,
+          "loop_over_25ms": 158,
+          "costs": {
+            "core_cpu_events": {
+              "ticks": 8603,
+              "calls": 300
+            },
+            "ppu_render": {
+              "ticks": 2809,
+              "calls": 48000
+            },
+            "core_audio": {
+              "ticks": 262,
+              "calls": 600
+            },
+            "screen_output": {
+              "ticks": 13002,
+              "calls": 300
+            },
+            "pcm_resample": {
+              "ticks": 209,
+              "calls": 300
+            },
+            "input_poll": {
+              "ticks": 10362,
+              "calls": 600
+            },
+            "rom_io": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "jit_cache_sync": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "save_checkpoint": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "pacing_wait": {
+              "ticks": 129281,
+              "calls": 1889191
+            },
+            "loop_other": {
+              "ticks": 69,
+              "calls": 300
+            }
+          },
+          "video_detail": {
+            "window": 1,
+            "frames": 150,
+            "buffer_ticks": 31,
+            "scale_ticks": 12922
+          }
+        },
+        {
+          "index": 2,
+          "frames": 300,
+          "displayed": 150,
+          "elapsed_us": 5025482,
+          "core_mean_us": 2532,
+          "core_max_us": 5310,
+          "core_p95_bin_ms": 4,
+          "over_16_743ms": 0,
+          "loop_under_2ms": 28,
+          "loop_over_25ms": 153,
+          "costs": {
+            "core_cpu_events": {
+              "ticks": 8666,
+              "calls": 300
+            },
+            "ppu_render": {
+              "ticks": 2694,
+              "calls": 48000
+            },
+            "core_audio": {
+              "ticks": 255,
+              "calls": 600
+            },
+            "screen_output": {
+              "ticks": 13213,
+              "calls": 300
+            },
+            "pcm_resample": {
+              "ticks": 196,
+              "calls": 300
+            },
+            "input_poll": {
+              "ticks": 10496,
+              "calls": 600
+            },
+            "rom_io": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "jit_cache_sync": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "save_checkpoint": {
+              "ticks": 24,
+              "calls": 1
+            },
+            "pacing_wait": {
+              "ticks": 129043,
+              "calls": 1886130
+            },
+            "loop_other": {
+              "ticks": 88,
+              "calls": 300
+            }
+          },
+          "video_detail": {
+            "window": 2,
+            "frames": 150,
+            "buffer_ticks": 19,
+            "scale_ticks": 13164
+          }
+        },
+        {
+          "index": 3,
+          "frames": 246,
+          "displayed": 123,
+          "elapsed_us": 4092346,
+          "core_mean_us": 2746,
+          "core_max_us": 6469,
+          "core_p95_bin_ms": 5,
+          "over_16_743ms": 0,
+          "loop_under_2ms": 19,
+          "loop_over_25ms": 113,
+          "costs": {
+            "core_cpu_events": {
+              "ticks": 7777,
+              "calls": 246
+            },
+            "ppu_render": {
+              "ticks": 2510,
+              "calls": 39360
+            },
+            "core_audio": {
+              "ticks": 260,
+              "calls": 492
+            },
+            "screen_output": {
+              "ticks": 11473,
+              "calls": 246
+            },
+            "pcm_resample": {
+              "ticks": 212,
+              "calls": 246
+            },
+            "input_poll": {
+              "ticks": 9481,
+              "calls": 492
+            },
+            "rom_io": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "jit_cache_sync": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "save_checkpoint": {
+              "ticks": 0,
+              "calls": 0
+            },
+            "pacing_wait": {
+              "ticks": 102325,
+              "calls": 1370239
+            },
+            "loop_other": {
+              "ticks": 60,
+              "calls": 246
+            }
+          },
+          "video_detail": {
+            "window": 3,
+            "frames": 123,
+            "buffer_ticks": 17,
+            "scale_ticks": 11426
+          }
+        }
+      ],
+      "summary": {
+        "frames": 1146,
+        "displayed": 573,
+        "measured_loop_seconds": 19.047913,
+        "logic_fps": 60.164,
+        "core_mean_ms": 2.570084,
+        "core_max_ms": 6.469,
+        "costs": {
+          "core_cpu_events": {
+            "ticks": 33662,
+            "calls": 1146,
+            "ms_per_frame": 0.896407,
+            "loop_percent": 5.393,
+            "active_percent": 24.478
+          },
+          "ppu_render": {
+            "ticks": 10674,
+            "calls": 183360,
+            "ms_per_frame": 0.284245,
+            "loop_percent": 1.71,
+            "active_percent": 7.762
+          },
+          "core_audio": {
+            "ticks": 1103,
+            "calls": 2292,
+            "ms_per_frame": 0.029373,
+            "loop_percent": 0.177,
+            "active_percent": 0.802
+          },
+          "screen_output": {
+            "ticks": 50703,
+            "calls": 1146,
+            "ms_per_frame": 1.350203,
+            "loop_percent": 8.123,
+            "active_percent": 36.87
+          },
+          "pcm_resample": {
+            "ticks": 808,
+            "calls": 1146,
+            "ms_per_frame": 0.021517,
+            "loop_percent": 0.129,
+            "active_percent": 0.588
+          },
+          "input_poll": {
+            "ticks": 40569,
+            "calls": 2292,
+            "ms_per_frame": 1.080338,
+            "loop_percent": 6.5,
+            "active_percent": 29.501
+          },
+          "rom_io": {
+            "ticks": 0,
+            "calls": 0,
+            "ms_per_frame": 0.0,
+            "loop_percent": 0.0,
+            "active_percent": 0.0
+          },
+          "jit_cache_sync": {
+            "ticks": 0,
+            "calls": 0,
+            "ms_per_frame": 0.0,
+            "loop_percent": 0.0,
+            "active_percent": 0.0
+          },
+          "save_checkpoint": {
+            "ticks": 24,
+            "calls": 1,
+            "ms_per_frame": 0.000639,
+            "loop_percent": 0.004,
+            "active_percent": null
+          },
+          "pacing_wait": {
+            "ticks": 486336,
+            "calls": 7015511,
+            "ms_per_frame": 12.950957,
+            "loop_percent": 77.918,
+            "active_percent": null
+          },
+          "loop_other": {
+            "ticks": 283,
+            "calls": 1146,
+            "ms_per_frame": 0.007536,
+            "loop_percent": 0.045,
+            "active_percent": null
+          }
+        },
+        "video_detail": {
+          "displayed": 573,
+          "buffer_ms_per_display": 0.005166,
+          "scale_ms_per_display": 2.687571
+        }
+      }
+    }
+  ],
+  "coarse_runs": [
+    {
+      "reason": "pause",
+      "frames": 896,
+      "displayed": 447,
+      "interval_frames": 895,
+      "rtc_start": 1199176390,
+      "rtc_end": 1199176405,
+      "seconds": 15,
+      "resolution_seconds": 1,
+      "valid": 1,
+      "approx_logic_fps": 59.667,
+      "logic_fps_lower": 55.938,
+      "logic_fps_upper": 63.929
+    },
+    {
+      "reason": "exit",
+      "frames": 1146,
+      "displayed": 573,
+      "interval_frames": 1145,
+      "rtc_start": 1199176421,
+      "rtc_end": 1199176440,
+      "seconds": 19,
+      "resolution_seconds": 1,
+      "valid": 1,
+      "approx_logic_fps": 60.263,
+      "logic_fps_lower": 57.25,
+      "logic_fps_upper": 63.611
+    }
+  ],
+  "note": "Exclusive wall-time scopes include IRQ/OS scheduling without double counting. Pacing includes busy input polling. QEMU captures measure virtual guest time; real-h1 captures measure the physical device."
+}

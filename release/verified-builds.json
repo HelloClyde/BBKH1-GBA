@@ -1,0 +1,16 @@
+{
+  "version": "v0.12.3",
+  "date": "2026-10-06",
+  "binaries": {
+    "H1GBA.bda": {
+      "sha256": "0bb0b44bc696baea72ba287ec53b5e2a40bbca81374c036c153e5782a1e79c87",
+      "size": 981944,
+      "runtime_evidence": "docs/evidence/native-normal.json"
+    },
+    "H1GBA-profile.bda": {
+      "sha256": "92a921f8531782fcf7eebd019849c79f71a5c753edd8c03d4173870e12c0a586",
+      "size": 992248,
+      "runtime_evidence": "docs/evidence/native-profile.json"
+    }
+  }
+}

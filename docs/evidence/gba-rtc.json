@@ -1,0 +1,28 @@
+{
+  "pass": true,
+  "build_sha256": "02d06f425a04ae78a1ea6b143192df951c633739331c87b6f1e81fa5bb138da4",
+  "initial": "40261005011130000040260228062359582602280601020381020326022806130203",
+  "restored": "4026022806130403",
+  "state": [
+    826496082,
+    1,
+    1772283723,
+    1791199800,
+    64,
+    0,
+    0,
+    0
+  ],
+  "checks": [
+    "GPIO status/reset/LSB command",
+    "date/time writes",
+    "12/24 hour BCD",
+    "offline +120s",
+    "clock moved backwards",
+    "legacy SRAM",
+    "unset clock fallback",
+    "corrupt RTC preserved; SRAM saves",
+    "non-RTC cartridge has no sidecar",
+    "running clock correction remains monotonic"
+  ]
+}

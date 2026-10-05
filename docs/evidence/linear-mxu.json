@@ -1,0 +1,19 @@
+{
+  "ok": true,
+  "bda_sha256": "0bb0b44bc696baea72ba287ec53b5e2a40bbca81374c036c153e5782a1e79c87",
+  "pixels_checked": 56394,
+  "weights": "all 1..255",
+  "counts": [
+    1,
+    2,
+    3,
+    4,
+    63,
+    302,
+    408
+  ],
+  "IRQ_enabled_and_disabled_restored": true,
+  "MXU_registers_control_restored": true,
+  "tail_guard_and_const_sources_preserved": true,
+  "environment": "Unicorn with independent MXU lane model"
+}
