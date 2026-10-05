@@ -19,7 +19,8 @@ def main():
     archive = dest/'g++-mipsel-none-elf-15.2.0.zip'
     if not archive.is_file():
         print('Downloading',URL,flush=True)
-        with urllib.request.urlopen(URL,timeout=120) as response, archive.with_suffix('.part').open('wb') as output:
+        request = urllib.request.Request(URL,headers={'User-Agent':'BBKH1-GBA/0.12.3 (+https://github.com/HelloClyde/BBKH1-GBA)'})
+        with urllib.request.urlopen(request,timeout=120) as response, archive.with_suffix('.part').open('wb') as output:
             import shutil
             shutil.copyfileobj(response,output)
         archive.with_suffix('.part').replace(archive)
