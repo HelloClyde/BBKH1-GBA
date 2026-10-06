@@ -203,7 +203,17 @@ int h1_app_main(void)
         h1_diag("ROM_SELECT_BEGIN dir=%s", directory);
         pick = h1_select_rom(directory, path, sizeof(path));
         h1_diag("ROM_SELECT_END status=%d", pick);
-        if (pick == 0) { log_line("ROM selection cancelled"); break; }
+        if (pick == 0) {
+            log_line("ROM selection cancelled");
+            /* V1.41's selector sets game display mode even on cancellation.
+             * Closing without an open context is a no-op, so pair the native
+             * window APIs to restore desktop redraw before returning. */
+            h1_diag("SELECTOR_CANCEL_RESTORE_BEGIN");
+            if (gba_gui_open()) gba_gui_close();
+            else result = 4;
+            h1_diag("SELECTOR_CANCEL_RESTORE_END restored=%d", result == 0);
+            break;
+        }
         if (pick < 0) {
             h1_message_box(0, "File selection failed or path is too long. Please select a .gba, .gb or .gbc ROM.", "H1 GBA", 0);
             clear_input(1); continue;

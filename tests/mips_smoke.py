@@ -298,6 +298,9 @@ def main():
     assert 'SAVE restored' in log, log
     cancelled = Machine(args.bda, path=None); cancelled.run()
     assert cancelled.blits == 0 and len(cancelled.select_calls) == 1
+    assert cancelled.gui_opens == cancelled.gui_closes == 1
+    assert b'SELECTOR_CANCEL_RESTORE_END restored=1' in cancelled.files[log_path]
+    assert b'CORE_INIT_BEGIN' not in cancelled.files[log_path]
     chinese_path = 'A:\\游戏\\口袋妖怪.gba'
     chinese = Machine(args.bda, path=chinese_path, menu=args.menu, switch=args.menu)
     chinese.run(); chinese.check_frame(False)
