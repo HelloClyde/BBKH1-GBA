@@ -18,11 +18,12 @@ class Pause(Machine):
         self.callbacks[0x80001900]=self.coordinates
         self.write(0x80001900,struct.pack('<6I',0x27bdffa8,0xafbf0050,0,0,0x00a0b821,0x0080b021))
         self.pause_sent=False;self.idle=0;self.mutated=False;self.restored=False
-        self.menu_steps=0;self.after_resume=None;self.golden=None
+        self.menu_steps=0;self.after_resume=None;self.golden=None;self.about_frame=None
         self.map_path=map_path;self.cpu_address=symbol('reg' if kind=='gba' else 'h1gb_cpu',map_path)
         self.ram_address=symbol('ewram' if kind=='gba' else 'h1gb_ram',map_path)
         if kind=='gba' and json.loads(bda.with_suffix('.build.json').read_text())['core']=='jit': self.ram_address+=0x40000
-        self.actions=([(11,330,230),(8,10,10)]+tap(330,80)+tap(70,132)+key(1)+key(41)+ # drag cancels EXIT; A=Q, back
+        self.actions=([(11,330,230),(8,10,10)]+tap(100,252)+tap(400,254)+key(39)+key(41)+ # About: touch/confirm/back
+            tap(330,80)+tap(70,132)+key(1)+key(41)+ # drag cancels EXIT; A=Q, back
             tap(90,175)+tap(100,72)+tap(100,72)+tap(100,112)+key(41)+ # linear aspect, skip2
             tap(90,130)+tap(100,72)+key(41)+ # state slot1
             tap(330,130)+tap(100,72)+key(41)+ # load slot1
@@ -50,6 +51,8 @@ class Pause(Machine):
             self.actions.insert(0,(8,330,230))
         elif paused:
             assert not self.audio_active
+            if b'MENU_PAGE page=5' in log and self.about_frame is None:
+                self.about_frame=self.read(0x82000000,480*272*4)
             if self.idle<20:
                 current=[self.read(a,n) for a,n in self.watched()]
                 if not self.idle:self.frozen=current
@@ -103,6 +106,7 @@ def main():
     for kind in ['gba','gb','gbc']:
         machine=Pause(args.bda,kind,args.map);seconds=machine.run()
         assert machine.restored and machine.menu_steps>30 and machine.blits>4
+        assert machine.about_frame and machine.files[LOG].count(b'MENU_PAGE page=5')>=2
         path=machine.rom_path
         cfg=machine.files[path+'.cfg.s0'];assert zlib.crc32(cfg[28:])==struct.unpack_from('<I',cfg,20)[0]
         fields=struct.unpack_from('<5I',cfg,28);assert fields[2:]==(3,2,0),fields
@@ -110,6 +114,8 @@ def main():
         assert path+'.st1.s0' in machine.files
         pixels=struct.unpack('<130560I',machine.menu_frames[1]);im=Image.new('RGB',(480,272))
         im.putdata([((p>>16)&255,(p>>8)&255,p&255) for p in pixels]);im.save(out/('pause-'+kind+'.png'))
+        pixels=struct.unpack('<130560I',machine.about_frame)
+        im.putdata([((p>>16)&255,(p>>8)&255,p&255) for p in pixels]);im.save(out/('about-'+kind+'.png'))
         # New invocation restores configuration, releases old input, stays silent.
         second=Machine(args.bda,path=path,files=machine.files,menu=True);second.run()
         assert not second.audio_submissions
@@ -124,6 +130,7 @@ def main():
             'paused_cpu_ram_stable':True,'cpu_ram_sram_restored':True,'config_reopened':True,'blits':machine.blits})
     engine=json.loads(args.bda.with_suffix('.build.json').read_text())['core']
     report={'ok':True,'bda':str(args.bda),'sha256':hashlib.sha256(args.bda.read_bytes()).hexdigest(),
-        'core':engine,'empty_corrupt_preserved':True,'P_keyboard_menu':True,'touch_drag_cancelled':True,'results':results}
+        'core':engine,'empty_corrupt_preserved':True,'P_keyboard_menu':True,'touch_drag_cancelled':True,
+        'about_touch_keyboard_return':True,'results':results}
     (out/('pause-menu-'+engine+'-smoke.json')).write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

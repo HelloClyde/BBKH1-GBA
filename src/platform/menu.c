@@ -66,13 +66,15 @@ static unsigned mapping_key(const input_state *s,unsigned id)
 { for (unsigned k=1;k<=44;++k) if (s->mapping[k]==id+1) return k; return 0; }
 static void box(int page,int index,int *x,int *y,int *w,int *h)
 {
+    if (page==5) { *x=338;*y=240;*w=104;*h=28;return; }
+    if (page==0 && index==8) { *x=18;*y=236;*w=444;*h=32;return; }
     if (page==0 || (page==1 && index<10)) {
         *x=18+(index%2)*230;*w=214;
-        *y=(page==0?60:54)+(index/2)*(page==0?48:32);*h=page==0?40:28;
+        *y=54+(index/2)*(page==0?46:32);*h=page==0?40:28;
     } else if (page==1) { *x=18+(index-10)*230;*y=226;*w=214;*h=30; }
     else { *x=38;*w=404;*y=56+index*40;*h=34; }
 }
-static int count(int page) { return page==0?8:page==1?12:4; }
+static int count(int page) { return page==0?9:page==1?12:page==5?1:4; }
 static int hit(int page,int x,int y)
 {
     for (int i=0;i<count(page);++i) {
@@ -83,12 +85,21 @@ static int hit(int page,int x,int y)
 }
 static void draw(int page,int cursor,int capture,const char *status,const input_state *s,const h1_config *c)
 {
-    static const char *titles[]={"游戏已暂停","按键映射","即时存档","即时读档","显示设置"};
-    static const char *root[]={"继续游戏","按键映射","即时存档","即时读档","显示设置","","更换游戏","退出游戏"};
+    static const char *titles[]={"游戏已暂停","按键映射","即时存档","即时读档","显示设置","关于 GameBoy"};
+    static const char *root[]={"继续游戏","按键映射","即时存档","即时读档","显示设置","","更换游戏","退出游戏","关于"};
     static const char *modes[]={"原始大小","保持比例","全屏拉伸","保持比例（线性平滑）"};
     char label[96];
     rect(0,0,480,272,0x0843);text(titles[page],18,8,0xffff);
-    text(capture>=0?"请按实体键，返回取消":status&&*status?status:"触摸选择，方向键／确认，返回继续",18,32,0xbdf7);
+    text(page==5?"确认／返回回到暂停菜单":capture>=0?"请按实体键，返回取消":status&&*status?status:"触摸选择，方向键／确认，返回继续",18,32,0xbdf7);
+    if (page==5) {
+        text("移植作者：HelloClyde",38,60,0xffff);
+        text("模拟器核心：",38,88,0xbdf7);
+        text("GBA: gpSP    GB/GBC: gnuboy",38,112,0xffff);
+        text("Thanks:",38,144,0xbdf7);
+        text("步步高电子词典游戏群（830340878）",38,170,0xffff);
+        text("BBK9588贴吧",38,194,0xffff);
+        text("唔识游水的鱼??",38,218,0xffff);
+    }
     for (int i=0;i<count(page);++i) {
         const char *title=label;
         if (page==0) { title=root[i];if(i==5){snprintf(label,sizeof label,"声音：%s",c->sound?"开":"关");title=label;} }
@@ -98,7 +109,8 @@ static void draw(int page,int cursor,int capture,const char *status,const input_
         } else if (page==2 || page==3) {
             if (i<3) snprintf(label,sizeof label,"%s槽位 %d",page==2?"存档到":"读取",i+1);
             else title="返回";
-        } else {
+        } else if (page==5) title="返回";
+        else {
             if (i==0) snprintf(label,sizeof label,"画面：%s",modes[s->scale]);
             if (i==1) snprintf(label,sizeof label,"跳帧：%d（0 为关闭）",s->skip);
             if (i==2) title="恢复默认显示";
@@ -149,13 +161,14 @@ int h1_pause_menu(input_state *s,h1_config *c,const h1_core *core,const char *ro
             if (key==H1_KEY_DOWN) delta=page<=1?2:1;
             if (delta) { cursor=(cursor+delta+count(page))%count(page);dirty=1; }
         }
-        if (back) { if (!page) break;page=0;cursor=0;status="";pen=-1;dirty=1; }
+        if (back) { if (!page) break;cursor=page==5?8:0;page=0;status="";pen=-1;dirty=1; }
         if (!activate || capture>=0) continue;
         status="";dirty=1;pen=-1;
         if (page==0) {
             if (cursor==0) break;
             if (cursor==6 || cursor==7) { result=cursor==6?1:2;break; }
             if (cursor==5) { c->sound=!c->sound;continue; }
+            if (cursor==8) { page=5;cursor=0;continue; }
             page=cursor==1?1:cursor==2?2:cursor==3?3:4;cursor=0;
         } else if (page==1) {
             if (cursor<10) capture=cursor;
@@ -166,7 +179,8 @@ int h1_pause_menu(input_state *s,h1_config *c,const h1_core *core,const char *ro
             status="正在处理，请稍候";draw(page,cursor,-1,status,s,c);
             int rc=h1_state_slot(core,rom,(unsigned)cursor,page==2);
             status=rc==1?(page==2?"存档成功":"读档成功"):rc==0?"这个槽位还没有存档":rc==-2?"存档版本不兼容":"存档失败，请检查文件和空间";
-        } else {
+        } else if (page==5) { page=0;cursor=8; }
+        else {
             if (cursor==0) s->scale=(s->scale+1)%H1_SCALE_COUNT;
             if (cursor==1) s->skip=(s->skip+1)%3;
             if (cursor==2) { s->scale=1;s->skip=1; }
