@@ -47,12 +47,14 @@ static void text(const char *s,int x,int y,uint16_t color)
         unsigned cp=(uint8_t)*s++;
         if (cp>=0xe0) { cp=(cp&15)<<12;cp|=((uint8_t)*s++&63)<<6;cp|=(uint8_t)*s++&63; }
         else if (cp>=0xc0) { cp=(cp&31)<<6;cp|=(uint8_t)*s++&63; }
+        unsigned advance=cp<128?10:20;
         for (unsigned i=0;i<MENU_GLYPH_COUNT;++i) if (menu_glyphs[i].code==cp) {
-            for (unsigned r=0;r<20;++r) for (unsigned col=0;col<18;++col)
+            advance=menu_glyphs[i].advance;
+            for (unsigned r=0;r<21;++r) for (unsigned col=0;col<18;++col)
                 if (menu_glyphs[i].rows[r]&(1u<<col)) rect(x+col,y+r,1,1,color);
             break;
         }
-        x+=cp<128?10:20;
+        x+=advance;
     }
 }
 static const unsigned logical[10]={RETRO_DEVICE_ID_JOYPAD_UP,RETRO_DEVICE_ID_JOYPAD_DOWN,
@@ -92,7 +94,7 @@ static void draw(int page,int cursor,int capture,const char *status,const input_
     rect(0,0,480,272,0x0843);text(titles[page],18,8,0xffff);
     text(page==5?"确认／返回回到暂停菜单":capture>=0?"请按实体键，返回取消":status&&*status?status:"触摸选择，方向键／确认，返回继续",18,32,0xbdf7);
     if (page==5) {
-        text("移植作者：HelloClyde",38,60,0xffff);
+        text("作者：HelloClyde",38,60,0xffff);
         text("模拟器核心：",38,88,0xbdf7);
         text("GBA: gpSP    GB/GBC: gnuboy",38,112,0xffff);
         text("Thanks:",38,144,0xbdf7);

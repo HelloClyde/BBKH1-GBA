@@ -15,8 +15,10 @@ Use case: stylized-concept. Create ONE finished raster app icon for the BBK H1 h
 ## 菜单字体
 
 发布使用 Noto Sans CJK SC Regular（OFL 1.1），不依赖 Windows 系统字体。
-源码中 `src/platform/menu_font.h` 是 18×20 位图的字形子集，许可文本见
+源码中 `src/platform/menu_font.h` 是 18×21 位图的字形子集，许可文本见
 `licenses/NotoSansCJK-OFL.txt`。不分发原始 OTF 文件，普通构建直接使用生成头文件。
+中文和英文使用 18 像素字形；统一基线，并记录每个字形的
+实际前进宽度，避免大小写错位和宽字母重叠。
 
 来源：[notofonts/noto-cjk](https://github.com/notofonts/noto-cjk)，固定提交
 `f8d157532fbfaeda587e826d4cd5b21a49186f7c`，文件
