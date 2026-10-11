@@ -223,6 +223,7 @@ int h1_app_main(void)
             core = n >= 4 && (path[n-1] == 'a' || path[n-1] == 'A') ? &gba_core : &h1_gb_core;
         }
         h1_config_load(&config,&input,path);
+        gba_audio_set_volume(config.volume);
         h1_diag("CORE_SELECTED name=%s", core->name);
         core->environment(environment); core->video(video); core->audio(audio); core->poll(poll); core->input(buttons);
         h1_rom_directory(path, directory, sizeof(directory));

@@ -70,9 +70,9 @@ def main():
             touch(100,100);time.sleep(1)
             result['audio_paused']=quiet('tone-paused')
             # Mute, resume and verify silent play; turn it back on before switching.
-            touch(320,175);touch(100,80);time.sleep(1)
+            touch(320,175);touch(100,72);tap(41);touch(100,80);time.sleep(1)
             result['audio_muted']=quiet('tone-muted')
-            touch(100,100);touch(320,175)
+            touch(100,100);touch(320,175);touch(100,72);tap(41)
         else:touch(100,100)
         report['runs'].append(result);checkpoint(report)
         touch(100,230) if kind!='emerald' else touch(320,230)

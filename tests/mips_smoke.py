@@ -46,6 +46,8 @@ class Machine:
         self.audio_consumes = True
         self.audio_cursor = self.audio_base = 0
         self.audio_samples = 4096
+        self.system_volume = 37
+        self.volume_changes = []
         self.loading_frames = []
         self.menu_frames = []
         self.heap = 0x81000000
@@ -99,6 +101,19 @@ class Machine:
         self.word(0x8000505c, submit_stub)
         self.write(submit_stub, struct.pack('<II', 0x03e00008, 0))
         self.write(submit_stub + 0x70, struct.pack('<3I', 0x3c068000, 0x24c66000, 0x00c43021))
+        # Native volume instruction fingerprints; services execute via mocks.
+        for offset, address, callback, code in [
+            (0x40,0x80001a00,self.volume_set,(0x28850065,0x24030064)),
+            (0x44,0x80001a40,self.volume_get,(0x3c028000,0x03e00008,0x8c426100)),
+        ]:
+            self.word(0x80005000+offset,address);self.callbacks[address]=callback
+            self.write(address,struct.pack('<'+'I'*len(code),*code))
+    def volume_set(self, value, *a):
+        assert 0<=value<=100
+        self.system_volume=value;self.volume_changes.append(value)
+        self.uc.reg_write(UC_MIPS_REG_PC,self.uc.reg_read(UC_MIPS_REG_RA));return 0
+    def volume_get(self, *a):
+        self.uc.reg_write(UC_MIPS_REG_PC,self.uc.reg_read(UC_MIPS_REG_RA));return self.system_volume
     def pcm_init(self, descriptor, *a):
         assert descriptor % 32 == 0
         pcm, size = struct.unpack('<2I', self.read(descriptor, 8))

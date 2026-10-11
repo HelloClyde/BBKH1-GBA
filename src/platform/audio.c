@@ -17,6 +17,10 @@ typedef int (*descriptor_fn)(pcm_descriptor *);
 typedef int (*device_fn)(void);
 typedef int (*open_fn)(uint32_t *);
 typedef int (*submit_fn)(int, pcm_descriptor *, int, int);
+typedef void (*volume_set_fn)(int);
+static volume_set_fn set_volume;
+static device_fn get_volume;
+static unsigned volume=100, original_volume, volume_owned;
 static pcm_descriptor descriptors[SLOTS] __attribute__((aligned(32)));
 static int16_t samples[SLOTS][BLOCK_SAMPLES] __attribute__((aligned(32)));
 static descriptor_fn initialize, destroy;
@@ -71,6 +75,26 @@ static void *service(unsigned offset)
     return h1_runtime_entry(h1_runtime_table(H1_RUNTIME_SYS_TABLE_SLOT), offset);
 }
 
+static void resolve_volume(void)
+{
+    const uint32_t *setter=service(0x40u), *getter=service(0x44u);
+    /* V1.41 setter clamps to 100; getter loads a global in its return slot.
+     * Reject unknown implementations rather than calling an unverified ABI. */
+    set_volume=0;get_volume=0;
+    if (!setter || !getter || setter[0]!=0x28850065u || setter[1]!=0x24030064u ||
+        (getter[0]&0xffff0000u)!=0x3c020000u || getter[1]!=0x03e00008u ||
+        (getter[2]&0xffff0000u)!=0x8c420000u) return;
+    set_volume=(volume_set_fn)setter;get_volume=(device_fn)getter;
+}
+void gba_audio_set_volume(unsigned percent)
+{
+    volume=percent>100u?100u:percent;
+    if (active && volume_owned) {
+        set_volume((int)volume);
+        h1_diag("AUDIO_VOLUME percent=%u native=1",volume);
+    }
+}
+
 /* V1.41 has no public completion callback. Resolve the queue's address from
  * the supplied submit implementation, accepting only its verified instruction
  * sequence. Queue nodes contain next, descriptor, cursor, end, repeats, flags.
@@ -120,9 +144,11 @@ int gba_audio_open(unsigned source_rate)
 {
     uint32_t config[9] = {OUTPUT_RATE, 1, 4096, 0, 0, 0, 0, 0, 0};
     open_fn open_device = (open_fn)service(0x58u);
-    int result;
+    int result, previous=-1;
     unsigned i;
     gba_audio_close();
+    resolve_volume();
+    if (get_volume) previous=get_volume();
     initialize = (descriptor_fn)service(0x50u); destroy = (descriptor_fn)service(0x54u);
     submit = (submit_fn)service(0x5cu); start = (device_fn)service(0x60u);
     stop = (device_fn)service(0x64u); close_device = (device_fn)service(0x68u);
@@ -150,6 +176,13 @@ int gba_audio_open(unsigned source_rate)
     h1_diag("AUDIO_DEVICE_END rc=%d", result);
     if (!result) { gba_audio_close(); return 0; }
     active = 1;
+    if (set_volume && get_volume) {
+        if (previous>=0 && previous<=100) {
+            original_volume=(unsigned)previous;volume_owned=1;
+            gba_audio_set_volume(volume);
+        }
+    }
+    if (!volume_owned) h1_diag("AUDIO_VOLUME unavailable=1");
     h1_diag("AUDIO_START_BEGIN"); result = start(); h1_diag("AUDIO_START_END rc=%d", result);
     if (!result) { gba_audio_close(); return 0; }
     h1_diag("AUDIO_OPEN_END ready=1"); return 1;
@@ -237,6 +270,10 @@ void gba_audio_close(void)
     if (active) {
         h1_diag("AUDIO_CLOSE_BEGIN batches=%u submitted=%u nonzero=%u dropped=%u failures=%u underruns=%u", batches, submitted, nonzero, dropped, failures, underruns);
         stop(); submit(0, 0, 0, 0); close_device(); active = 0;
+        if (volume_owned) {
+            set_volume((int)original_volume);volume_owned=0;
+            h1_diag("AUDIO_VOLUME_RESTORE percent=%u",original_volume);
+        }
         dump_gaps("close");
     }
     for (i = 0; i < initialized; ++i) destroy(&descriptors[i]);

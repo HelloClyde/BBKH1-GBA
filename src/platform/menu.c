@@ -4,30 +4,33 @@
 #include "game_video.h"
 #include "diagnostics.h"
 #include "menu_font.h"
+#include "audio.h"
 #include <string.h>
 #include <stdio.h>
 
-typedef struct { uint32_t magic,version,scale,skip,sound; uint8_t mapping[45],padding[3]; } config_data;
+/* Keep the v1 payload size: volume occupies a formerly reserved byte. */
+typedef struct { uint32_t magic,version,scale,skip,sound; uint8_t mapping[45],volume,padding[2]; } config_data;
 static void config_pack(config_data *d,const h1_config *c,const input_state *s)
 {
-    memset(d,0,sizeof *d);d->magic=0x31474643;d->version=1;
+    memset(d,0,sizeof *d);d->magic=0x31474643;d->version=2;d->volume=c->volume;
     d->scale=s->scale;d->skip=s->skip;d->sound=c->sound;memcpy(d->mapping,s->mapping,45);
 }
 void h1_config_load(h1_config *c,input_state *s,const char *rom)
 {
     config_data d;
-    s->scale=1;s->skip=1;input_mapping_defaults(s);c->sound=1;
+    s->scale=1;s->skip=1;input_mapping_defaults(s);c->sound=1;c->volume=100;
     config_pack(&d,c,s);
     int result=save_load_aux(&c->store,rom,&d,sizeof d,".cfg");
     c->enabled=result>=0;
     if (result==1) {
-        int valid=d.magic==0x31474643 && d.version==1 && d.scale<H1_SCALE_COUNT && d.skip<3 && d.sound<2 && !d.mapping[0];
+        int valid=d.magic==0x31474643 && (d.version==1 || d.version==2) &&
+            (d.version==1 || d.volume<=100) && d.scale<H1_SCALE_COUNT && d.skip<3 && d.sound<2 && !d.mapping[0];
         for (unsigned k=1;k<=44;++k) if (d.mapping[k]>16 || (input_key_reserved(k)&&d.mapping[k])) valid=0;
-        if (valid) { s->scale=d.scale;s->skip=d.skip;c->sound=d.sound;memcpy(s->mapping,d.mapping,45); }
+        if (valid) { s->scale=d.scale;s->skip=d.skip;c->sound=d.sound;c->volume=d.version==1?100:d.volume;memcpy(s->mapping,d.mapping,45); }
         else c->enabled=0;
     }
     s->scale_changed=s->skip_changed=1;
-    h1_diag("CONFIG_LOAD status=%d enabled=%d scale=%d skip=%d sound=%d",result,c->enabled,s->scale,s->skip,c->sound);
+    h1_diag("CONFIG_LOAD status=%d enabled=%d scale=%d skip=%d sound=%d volume=%u",result,c->enabled,s->scale,s->skip,c->sound,c->volume);
 }
 void h1_config_save(h1_config *c,const input_state *s)
 {
@@ -87,12 +90,15 @@ static int hit(int page,int x,int y)
 }
 static void draw(int page,int cursor,int capture,const char *status,const input_state *s,const h1_config *c)
 {
-    static const char *titles[]={"游戏已暂停","按键映射","即时存档","即时读档","显示设置","关于 GameBoy"};
+    static const char *titles[]={"游戏已暂停","按键映射","即时存档","即时读档","显示设置","关于 GameBoy","声音设置"};
     static const char *root[]={"继续游戏","按键映射","即时存档","即时读档","显示设置","","更换游戏","退出游戏","关于"};
     static const char *modes[]={"原始大小","保持比例","全屏拉伸","保持比例（线性平滑）"};
     char label[96];
     rect(0,0,480,272,0x0843);text(titles[page],18,8,0xffff);
-    text(page==5?"确认／返回回到暂停菜单":capture>=0?"请按实体键，返回取消":status&&*status?status:"触摸选择，方向键／确认，返回继续",18,32,0xbdf7);
+    if (page==6 && !(status&&*status)) {
+        snprintf(label,sizeof label,"音量：%u%%  左右键调节",c->volume);text(label,18,32,0xbdf7);
+        rect(38,226,404,12,0x2128);rect(38,226,(int)(404*c->volume/100),12,0x05b4);
+    } else text(page==5?"确认／返回回到暂停菜单":capture>=0?"请按实体键，返回取消":status&&*status?status:"触摸选择，方向键／确认，返回继续",18,32,0xbdf7);
     if (page==5) {
         text("作者：HelloClyde",38,60,0xffff);
         text("模拟器核心：",38,88,0xbdf7);
@@ -104,7 +110,7 @@ static void draw(int page,int cursor,int capture,const char *status,const input_
     }
     for (int i=0;i<count(page);++i) {
         const char *title=label;
-        if (page==0) { title=root[i];if(i==5){snprintf(label,sizeof label,"声音：%s",c->sound?"开":"关");title=label;} }
+        if (page==0) { title=root[i];if(i==5){if(c->sound)snprintf(label,sizeof label,"声音设置：%u%%",c->volume);else snprintf(label,sizeof label,"声音设置：关");title=label;} }
         else if (page==1) {
             if (i<10) snprintf(label,sizeof label,"%s：%s",logical_names[i],key_names[mapping_key(s,logical[i])]);
             else title=i==10?"恢复默认按键":"返回";
@@ -112,6 +118,12 @@ static void draw(int page,int cursor,int capture,const char *status,const input_
             if (i<3) snprintf(label,sizeof label,"%s槽位 %d",page==2?"存档到":"读取",i+1);
             else title="返回";
         } else if (page==5) title="返回";
+        else if (page==6) {
+            if (i==0) snprintf(label,sizeof label,"声音：%s",c->sound?"开":"关");
+            if (i==1) title="减小音量（-10%）";
+            if (i==2) title="增大音量（+10%）";
+            if (i==3) title="返回";
+        }
         else {
             if (i==0) snprintf(label,sizeof label,"画面：%s",modes[s->scale]);
             if (i==1) snprintf(label,sizeof label,"跳帧：%d（0 为关闭）",s->skip);
@@ -156,6 +168,10 @@ int h1_pause_menu(input_state *s,h1_config *c,const h1_core *core,const char *ro
                 dirty=1;continue;
             }
             activate=key==H1_KEY_CONFIRM || key==H1_KEY_ENTER || key==H1_KEY_Z;
+            if (page==6 && (key==H1_KEY_LEFT || key==H1_KEY_RIGHT)) {
+                c->volume=key==H1_KEY_LEFT?(c->volume>10?c->volume-10:0):(c->volume<90?c->volume+10:100);
+                gba_audio_set_volume(c->volume);status="";dirty=1;continue;
+            }
             int delta=0;
             if (key==H1_KEY_LEFT) delta=-1;
             if (key==H1_KEY_RIGHT) delta=1;
@@ -163,13 +179,13 @@ int h1_pause_menu(input_state *s,h1_config *c,const h1_core *core,const char *ro
             if (key==H1_KEY_DOWN) delta=page<=1?2:1;
             if (delta) { cursor=(cursor+delta+count(page))%count(page);dirty=1; }
         }
-        if (back) { if (!page) break;cursor=page==5?8:0;page=0;status="";pen=-1;dirty=1; }
+        if (back) { if (!page) break;cursor=page==5?8:page==6?5:0;page=0;status="";pen=-1;dirty=1; }
         if (!activate || capture>=0) continue;
         status="";dirty=1;pen=-1;
         if (page==0) {
             if (cursor==0) break;
             if (cursor==6 || cursor==7) { result=cursor==6?1:2;break; }
-            if (cursor==5) { c->sound=!c->sound;continue; }
+            if (cursor==5) { page=6;cursor=0;continue; }
             if (cursor==8) { page=5;cursor=0;continue; }
             page=cursor==1?1:cursor==2?2:cursor==3?3:4;cursor=0;
         } else if (page==1) {
@@ -182,6 +198,13 @@ int h1_pause_menu(input_state *s,h1_config *c,const h1_core *core,const char *ro
             int rc=h1_state_slot(core,rom,(unsigned)cursor,page==2);
             status=rc==1?(page==2?"存档成功":"读档成功"):rc==0?"这个槽位还没有存档":rc==-2?"存档版本不兼容":"存档失败，请检查文件和空间";
         } else if (page==5) { page=0;cursor=8; }
+        else if (page==6) {
+            if (cursor==0) c->sound=!c->sound;
+            if (cursor==1) c->volume=c->volume>10?c->volume-10:0;
+            if (cursor==2) c->volume=c->volume<90?c->volume+10:100;
+            if (cursor==3) { page=0;cursor=5; }
+            gba_audio_set_volume(c->volume);
+        }
         else {
             if (cursor==0) s->scale=(s->scale+1)%H1_SCALE_COUNT;
             if (cursor==1) s->skip=(s->skip+1)%3;

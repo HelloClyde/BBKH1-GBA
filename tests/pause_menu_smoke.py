@@ -27,7 +27,7 @@ class Pause(Machine):
             tap(90,175)+tap(100,72)+tap(100,72)+tap(100,112)+key(41)+ # linear aspect, skip2
             tap(90,130)+tap(100,72)+key(41)+ # state slot1
             tap(330,130)+tap(100,72)+key(41)+ # load slot1
-            tap(330,175)+tap(90,80)) # sound off, resume
+            tap(330,175)+tap(100,72)+key(41)+tap(90,80)) # sound settings, off, back, resume
     def coordinates(self,x,y,*args):
         position=self.read(0x80007008,4)
         self.write(x,position[:2]);self.write(y,position[2:])

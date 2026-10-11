@@ -173,6 +173,7 @@ def main():
                 "rom_selector": "H1 GUI+0x9EC; native game window GUI+0x84C/+0x850",
                 "pause_menu": "touch or P; calibrated coordinates GUI+0x6C0",
                 "instant_state_slots": 3, "config": "per-ROM .cfg.s0/.s1",
+                "volume": "0..100%; native SYS+0x040/+0x044; per-ROM config v2; restore on close",
                 "display_modes": ["native", "aspect", "stretch", "aspect_linear"],
                 "linear_scaler": "source intervals; packed RGB888 rows; MXU1 Q8 vertical; exact selftest; guarded state; solid runs",
                 "game_input": "GUI+0x9D8; native scancode; once per core frame",
