@@ -5,15 +5,15 @@
 [gpSP](https://github.com/libretro/gpsp) 和 [gnuboy](https://github.com/rofl0r/gnuboy)，
 移植参考 [BBK9588-gba](https://github.com/HelloClyde/BBK9588-gba)。
 
-当前版本 **v0.12.3**：GBA MIPS JIT、原生 PCM 音频、系统文件选择器、加载进度、
+当前版本 **v0.12.4**：GBA MIPS JIT、原生 PCM 音频、系统文件选择器、加载进度、
 组合按键、触摸暂停菜单、三槽即时存档、GBA RTC，以及 MXU1 加速的保持比例线性平滑缩放。
 适配固件 **H1 V1.41**。此前已根据真机日志优化运行耗时；本次发布的确切构建经过
-MIPS 回归和完整固件模拟器验证，**v0.12.3 MXU 路径的真机速度仍待测试**。
+MIPS 回归和完整固件模拟器验证，**v0.12.4 MXU 路径的真机速度仍待测试**。
 
 ## 快速开始
 
 从 [Releases](https://github.com/HelloClyde/BBKH1-GBA/releases) 下载
-`BBKH1-GBA-v0.12.3-install.zip`，把其中 `应用` 和 `GBA` 目录合并复制到 H1 的 A 盘根目录。
+`BBKH1-GBA-v0.12.4-install.zip`，把其中 `应用` 和 `GBA` 目录合并复制到 H1 的 A 盘根目录。
 应用路径为 `A:\应用\程序\GameBoy.bda`；在系统应用菜单找到 **GameBoy** 后启动。
 也可以下载 `H1GBA.bda`，重命名为 `GameBoy.bda` 后复制到上述目录。
 
@@ -91,7 +91,7 @@ Source code ZIP 不包含子模块。完整源码包可直接构建，依赖版�
 | --- | --- |
 | ![暂停菜单](assets/screenshots/pause-menu.png) | ![显示设置](assets/screenshots/display-options.png) |
 
-菜单截图、发布 BDA 哈希及测试范围见 [发布验证记录](docs/release-v0.12.3.md)。
+菜单截图、发布 BDA 哈希及测试范围见 [发布验证记录](docs/release-v0.12.4.md)。
 
 ## 依赖
 

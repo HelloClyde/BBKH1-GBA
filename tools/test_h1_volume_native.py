@@ -17,9 +17,12 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--work-dir',type=Path,required=True)
     parser.add_argument('--initial-gba-volume',type=int,choices=(70,100),default=100)
+    parser.add_argument('--bda',type=Path,default=ROOT/'dist/H1GBA.bda')
+    parser.add_argument('--map',type=Path,default=ROOT/'build/release/H1GBA.map')
+    parser.add_argument('--prefix',default='volume')
     args=parser.parse_args()
     work=args.work_dir.resolve();out=work/'evidence';out.mkdir(exist_ok=True)
-    map_text=(ROOT/'build/release/H1GBA.map').read_text()
+    map_text=args.map.read_text()
     frame_address=int(re.search(r'\.bss\.total_frames\s+(0x[0-9a-f]+)',map_text)[1],16)
     def frames():return memory(frame_address,1)[0]
     def wait_advance(previous):
@@ -30,16 +33,16 @@ def main():
             time.sleep(.3)
         raise AssertionError('Game did not advance after resume')
     def shot(name):
-        target=out/('volume-'+name+'.png')
+        target=out/(args.prefix+'-'+name+'.png')
         subprocess.run([sys.executable,ROOT/'vendor/h1-sdk/scripts/capture_emulator_frame.py',target],check=True)
         return str(target)
     def record(name):
-        target=out/('volume-'+name+'.wav')
+        target=out/(args.prefix+'-'+name+'.wav')
         subprocess.run([sys.executable,ROOT/'tools/capture_h1_audio.py',target,'--seconds','3'],check=True)
         return json.loads(target.with_suffix('.json').read_text())
     original=memory(VOLUME,1)[0]
     report={'environment':'Full H1 V1.41 firmware in QEMU','physical_hardware_tested':False,
-            'bda_sha256':hashlib.sha256((ROOT/'dist/H1GBA.bda').read_bytes()).hexdigest(),
+            'bda_sha256':hashlib.sha256(args.bda.read_bytes()).hexdigest(),
             'original_system_volume':original,'runs':[]}
     for kind,row in [('gba',0),('gb',3),('gbc',4),('gba-reopen',0)]:
         for _ in range(row):tap(27)
@@ -67,10 +70,12 @@ def main():
         assert memory(VOLUME,1)[0]==original
         result['system_volume_restored']=memory(VOLUME,1)[0]
         report['runs'].append(result)
-        (out/'volume-native.json').write_text(json.dumps(report,indent=2)+'\n')
+        (out/(args.prefix+'-native.json')).write_text(json.dumps(report,indent=2)+'\n')
     tap(24);time.sleep(3);report['desktop_screenshot']=shot('exit')
     report['ok']=True
-    (out/'volume-native.json').write_text(json.dumps(report,indent=2)+'\n')
-    post('/api/stop',{});print(json.dumps(report,indent=2))
+    report['status']=post('/api/stop',{})
+    assert not report['status']['running'] and report['status']['returncode']==0 and not report['status']['last_error']
+    (out/(args.prefix+'-native.json')).write_text(json.dumps(report,indent=2)+'\n')
+    print(json.dumps(report,indent=2))
 
 if __name__=='__main__':main()

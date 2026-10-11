@@ -11,16 +11,16 @@ def tracked(repo):
         if not modepath[0].startswith('160000 '):yield modepath[1]
 
 def add(zipper,name,data):
-    info=zipfile.ZipInfo(name,(2026,10,6,0,0,0))
+    info=zipfile.ZipInfo(name,(2026,10,11,0,0,0))
     info.compress_type=zipfile.ZIP_DEFLATED
     info.external_attr=0o100644<<16
     zipper.writestr(info,data)
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--version',default='v0.12.3')
+    parser.add_argument('--version',default='v0.12.4')
     args=parser.parse_args()
-    if args.version!='v0.12.3':parser.error('Update release metadata and runtime evidence before a new version')
+    if args.version!='v0.12.4':parser.error('Update release metadata and runtime evidence before a new version')
     output=ROOT/'dist/release';output.mkdir(parents=True,exist_ok=True)
     files=[]
     for name in ['H1GBA.bda','H1GBA-profile.bda','H1GBA.build.json','H1GBA-profile.build.json']:
@@ -28,7 +28,7 @@ def main():
         shutil.copyfile(ROOT/'dist'/name,output/name);files.append(name)
     install=f'BBKH1-GBA-{args.version}-install.zip'
     with zipfile.ZipFile(output/install,'w') as archive:
-        add(archive,'应用/程序/GameBoy.bda',(ROOT/'dist/H1GBA.bda').read_bytes())
+        add(archive,'搴旂敤/绋嬪簭/GameBoy.bda',(ROOT/'dist/H1GBA.bda').read_bytes())
         add(archive,'GBA/',b'')
         for name in ['README.md','LICENSE','NOTICE.md']:
             add(archive,name,(ROOT/name).read_bytes())
