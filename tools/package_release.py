@@ -28,7 +28,7 @@ def main():
         shutil.copyfile(ROOT/'dist'/name,output/name);files.append(name)
     install=f'BBKH1-GBA-{args.version}-install.zip'
     with zipfile.ZipFile(output/install,'w') as archive:
-        add(archive,'搴旂敤/绋嬪簭/GameBoy.bda',(ROOT/'dist/H1GBA.bda').read_bytes())
+        add(archive,'应用/程序/GameBoy.bda',(ROOT/'dist/H1GBA.bda').read_bytes())
         add(archive,'GBA/',b'')
         for name in ['README.md','LICENSE','NOTICE.md']:
             add(archive,name,(ROOT/name).read_bytes())
