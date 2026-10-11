@@ -41,3 +41,6 @@ GBA《精灵宝可梦 绿宝石》截图，原图直接收录，没有修改。�
 
 其余截图为发布构建实测帧缓冲，来源与确切 BDA 哈希见 `docs/release-v0.12.3.md`。
 各截图的 SHA-256 和来源记录在 `docs/evidence/screenshots.json`；第三方 SDK 中的截图仍遵循该 SDK 的 NOTICE。
+
+`screenshots/volume-settings-v0.12.5.png` 为 v0.12.5 普通版在完整 H1 V1.41 固件
+模拟器中的实际帧缓冲，展示每次 5% 的音量按钮；验证见 `docs/release-v0.12.5.md`。

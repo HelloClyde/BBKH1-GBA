@@ -120,8 +120,8 @@ static void draw(int page,int cursor,int capture,const char *status,const input_
         } else if (page==5) title="返回";
         else if (page==6) {
             if (i==0) snprintf(label,sizeof label,"声音：%s",c->sound?"开":"关");
-            if (i==1) title="减小音量（-10%）";
-            if (i==2) title="增大音量（+10%）";
+            if (i==1) title="减小音量（-5%）";
+            if (i==2) title="增大音量（+5%）";
             if (i==3) title="返回";
         }
         else {
@@ -169,7 +169,7 @@ int h1_pause_menu(input_state *s,h1_config *c,const h1_core *core,const char *ro
             }
             activate=key==H1_KEY_CONFIRM || key==H1_KEY_ENTER || key==H1_KEY_Z;
             if (page==6 && (key==H1_KEY_LEFT || key==H1_KEY_RIGHT)) {
-                c->volume=key==H1_KEY_LEFT?(c->volume>10?c->volume-10:0):(c->volume<90?c->volume+10:100);
+                c->volume=key==H1_KEY_LEFT?(c->volume>5?c->volume-5:0):(c->volume<95?c->volume+5:100);
                 gba_audio_set_volume(c->volume);status="";dirty=1;continue;
             }
             int delta=0;
@@ -200,8 +200,8 @@ int h1_pause_menu(input_state *s,h1_config *c,const h1_core *core,const char *ro
         } else if (page==5) { page=0;cursor=8; }
         else if (page==6) {
             if (cursor==0) c->sound=!c->sound;
-            if (cursor==1) c->volume=c->volume>10?c->volume-10:0;
-            if (cursor==2) c->volume=c->volume<90?c->volume+10:100;
+            if (cursor==1) c->volume=c->volume>5?c->volume-5:0;
+            if (cursor==2) c->volume=c->volume<95?c->volume+5:100;
             if (cursor==3) { page=0;cursor=5; }
             gba_audio_set_volume(c->volume);
         }

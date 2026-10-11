@@ -169,11 +169,11 @@ def main():
     digest = hashlib.sha256(data).hexdigest()
     metadata = {"title": "GameBoy", "profile": args.profile, "sha256": digest, "size": len(data), "sdk_commit": SDK_COMMIT, "gpsp_commit": CORE_COMMIT,
                 "entry_va": "0x83c00020", "core": args.core, "audio": "H1 native PCM 32000 Hz mono",
-                "gnuboy_commit": GB_COMMIT, "formats": ["gba", "gb", "gbc"], "version": "0.12.4-linear-mxu-profile" if args.profile else "0.12.4-linear-mxu", "gba_rtc": "autodetect; H1 RTC; .rtc.s0/.rtc.s1", "benchmark": args.benchmark, "verbose_log":args.verbose_log, "log_path": "A:\\GBA\\h1gba.log",
+                "gnuboy_commit": GB_COMMIT, "formats": ["gba", "gb", "gbc"], "version": "0.12.5-linear-mxu-profile" if args.profile else "0.12.5-linear-mxu", "gba_rtc": "autodetect; H1 RTC; .rtc.s0/.rtc.s1", "benchmark": args.benchmark, "verbose_log":args.verbose_log, "log_path": "A:\\GBA\\h1gba.log",
                 "rom_selector": "H1 GUI+0x9EC; native game window GUI+0x84C/+0x850",
                 "pause_menu": "touch or P; calibrated coordinates GUI+0x6C0",
                 "instant_state_slots": 3, "config": "per-ROM .cfg.s0/.s1",
-                "volume": "0..100%; native SYS+0x040/+0x044; per-ROM config v2; restore on close",
+                "volume": "0..100%; 5% step; native SYS+0x040/+0x044; per-ROM config v2; restore on close",
                 "display_modes": ["native", "aspect", "stretch", "aspect_linear"],
                 "linear_scaler": "source intervals; packed RGB888 rows; MXU1 Q8 vertical; exact selftest; guarded state; solid runs",
                 "game_input": "GUI+0x9D8; native scancode; once per core frame",

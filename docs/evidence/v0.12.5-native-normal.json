@@ -1,0 +1,125 @@
+{
+  "environment": "Full H1 V1.41 firmware in QEMU",
+  "physical_hardware_tested": false,
+  "bda_sha256": "735b123fcd95b10eb3e6ebb7ce779722bfd449659ddf6339d441376862c02a65",
+  "original_system_volume": 51,
+  "volume_step_percent": 5,
+  "runs": [
+    {
+      "kind": "gba",
+      "loaded_volume": 100,
+      "volume_steps": [
+        100,
+        95,
+        90,
+        85,
+        80,
+        75,
+        70
+      ],
+      "touch_volume_steps": [
+        70,
+        65,
+        70
+      ],
+      "resumed_frames": 465,
+      "audio_70": {
+        "sample_rate": 32000,
+        "frames": 96297,
+        "seconds": 3.00928125,
+        "min": -5455,
+        "max": 4997,
+        "nonzero_samples": 192594,
+        "packets": 145
+      },
+      "audio_0": {
+        "sample_rate": 32000,
+        "frames": 96002,
+        "seconds": 3.0000625,
+        "min": 0,
+        "max": 0,
+        "nonzero_samples": 0,
+        "packets": 144
+      },
+      "system_volume_restored": 51,
+      "menu_screenshot_sha256": "6033bed54535d053b5f8d0f7ff9aff865eb76f9d734329f3f840244a582db2f4"
+    },
+    {
+      "kind": "gb",
+      "loaded_volume": 100,
+      "volume_steps": [
+        100,
+        95,
+        90,
+        85,
+        80,
+        75,
+        70
+      ],
+      "touch_volume_steps": [
+        70,
+        65,
+        70
+      ],
+      "resumed_frames": 428,
+      "system_volume_restored": 51,
+      "menu_screenshot_sha256": "6033bed54535d053b5f8d0f7ff9aff865eb76f9d734329f3f840244a582db2f4"
+    },
+    {
+      "kind": "gbc",
+      "loaded_volume": 100,
+      "volume_steps": [
+        100,
+        95,
+        90,
+        85,
+        80,
+        75,
+        70
+      ],
+      "touch_volume_steps": [
+        70,
+        65,
+        70
+      ],
+      "resumed_frames": 440,
+      "system_volume_restored": 51,
+      "menu_screenshot_sha256": "6033bed54535d053b5f8d0f7ff9aff865eb76f9d734329f3f840244a582db2f4"
+    },
+    {
+      "kind": "gba-reopen",
+      "loaded_volume": 0,
+      "system_volume_restored": 51
+    }
+  ],
+  "ok": true,
+  "status": {
+    "running": false,
+    "returncode": 0,
+    "last_error": null
+  },
+  "desktop_screenshot_sha256": "d64fcc9d7dd1e6e96e9068dcc5f4a5b682f91baca35bac02fd9b9b9049a75b5d",
+  "date": "2026-10-11",
+  "kernel_sha256": "d05786e442f9aad62a8d0a0cb4f6d786bdc7c2fa353a7a2b152c9ed9f01b40ef",
+  "qemu_sha256": "eebb8dceafd707c90d8dec761eecde6484d412cab040c1604f7cce3e2ae9f4d3",
+  "log_sha256": "c7d72e67337474010c1fcd4479af56af7ecbd9b020d427fff71561fef1186776",
+  "game_stops": [
+    {
+      "displays": 441,
+      "display_errors": 0
+    },
+    {
+      "displays": 216,
+      "display_errors": 0
+    },
+    {
+      "displays": 222,
+      "display_errors": 0
+    },
+    {
+      "displays": 184,
+      "display_errors": 0
+    }
+  ],
+  "nand_torn_records": 0
+}

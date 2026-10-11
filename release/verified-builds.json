@@ -1,16 +1,16 @@
 {
-  "version": "v0.12.4",
+  "version": "v0.12.5",
   "date": "2026-10-11",
   "binaries": {
     "H1GBA.bda": {
-      "sha256": "efda311ebed98e4fb569f7309b7702f5203aa44a7a45fb351cca1dfd6ec4830d",
+      "sha256": "735b123fcd95b10eb3e6ebb7ce779722bfd449659ddf6339d441376862c02a65",
       "size": 988856,
-      "runtime_evidence": "docs/evidence/v0.12.4-native-normal.json"
+      "runtime_evidence": "docs/evidence/v0.12.5-native-normal.json"
     },
     "H1GBA-profile.bda": {
-      "sha256": "1ed97543fbd5456910350d06b366f164187bc007728bc19fc63c57d03e6378e9",
+      "sha256": "d40202e44a292329f2588c0cf6894ea903ef9566a9a59c4c704625bdffc3d8b8",
       "size": 999096,
-      "runtime_evidence": "docs/evidence/v0.12.4-native-profile.json"
+      "runtime_evidence": "docs/evidence/v0.12.5-native-profile.json"
     }
   }
 }

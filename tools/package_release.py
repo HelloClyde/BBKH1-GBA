@@ -18,9 +18,9 @@ def add(zipper,name,data):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--version',default='v0.12.4')
+    parser.add_argument('--version',default='v0.12.5')
     args=parser.parse_args()
-    if args.version!='v0.12.4':parser.error('Update release metadata and runtime evidence before a new version')
+    if args.version!='v0.12.5':parser.error('Update release metadata and runtime evidence before a new version')
     output=ROOT/'dist/release';output.mkdir(parents=True,exist_ok=True)
     files=[]
     for name in ['H1GBA.bda','H1GBA-profile.bda','H1GBA.build.json','H1GBA-profile.build.json']:

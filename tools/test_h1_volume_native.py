@@ -43,7 +43,7 @@ def main():
     original=memory(VOLUME,1)[0]
     report={'environment':'Full H1 V1.41 firmware in QEMU','physical_hardware_tested':False,
             'bda_sha256':hashlib.sha256(args.bda.read_bytes()).hexdigest(),
-            'original_system_volume':original,'runs':[]}
+            'original_system_volume':original,'volume_step_percent':5,'runs':[]}
     for kind,row in [('gba',0),('gb',3),('gbc',4),('gba-reopen',0)]:
         for _ in range(row):tap(27)
         tap(39);time.sleep(8);assert frames()>4
@@ -53,15 +53,23 @@ def main():
         if kind!='gba-reopen':
             touch(100,100);time.sleep(.5);before=frames()
             touch(330,175)
-            for _ in range((expected-70)//10):tap(40)
+            result['volume_steps']=[expected]
+            for value in range(expected-5,69,-5):
+                tap(40);actual=memory(VOLUME,1)[0]
+                assert actual==value,(kind,value,actual)
+                result['volume_steps'].append(actual)
             assert memory(VOLUME,1)[0]==70 and frames()==before
+            touch(120,112);assert memory(VOLUME,1)[0]==65 and frames()==before
+            touch(120,152);assert memory(VOLUME,1)[0]==70 and frames()==before
+            result['touch_volume_steps']=[70,65,70]
             result['menu_screenshot']=shot(kind+'-70-menu')
             tap(41);touch(100,80);result['resumed_frames']=wait_advance(before)
             assert memory(VOLUME,1)[0]==70
             if kind=='gba':
                 result['audio_70']=record('gba-70')
                 touch(100,100);touch(330,175)
-                for _ in range(7):tap(40)
+                for value in range(65,-1,-5):
+                    tap(40);assert memory(VOLUME,1)[0]==value
                 assert memory(VOLUME,1)[0]==0
                 before=frames();tap(41);touch(100,80);wait_advance(before)
                 result['audio_0']=record('gba-0')

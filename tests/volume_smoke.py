@@ -7,8 +7,8 @@ from pause_menu_smoke import Pause,key,tap,LOG
 class Volume(Pause):
     def __init__(self,bda,kind):
         super().__init__(bda,kind,ROOT/'build/release/H1GBA.map')
-        boundary=key(40)*12+key(35)*12 if kind=='gba' else []
-        self.actions=tap(330,175)+boundary+tap(120,112)*7+key(40)+key(35)+key(41)+tap(90,80)
+        boundary=key(40)*22+key(35)*22 if kind=='gba' else []
+        self.actions=tap(330,175)+boundary+tap(120,112)*14+key(40)+key(35)+key(41)+tap(90,80)
         self.volume_frame=None;self.resumed_volume=None
     def event(self,code,button,*args):
         log=self.files.get(LOG,b'');paused=log.rfind(b'PAUSE_MENU_BEGIN')>log.rfind(b'PAUSE_MENU_END')
@@ -40,6 +40,8 @@ def main():
     for kind in ('gba','gb','gbc'):
         m=Volume(bda,kind);m.run();path=m.rom_path;cfg=path+'.cfg.s0'
         assert m.resumed_volume==30 and m.system_volume==37
+        # Touch and keyboard use 5% steps; only the final system restore is exempt.
+        assert all(abs(a-b) in (0,5) for a,b in zip(m.volume_changes[:-2],m.volume_changes[1:-1]))
         assert struct.unpack_from('<I',m.files[cfg],32)[0]==2 and m.files[cfg][28+65]==30
         assert m.files[LOG].count(b'AUDIO_OPEN_END ready=1')==1 # pause did not reopen
         if kind=='gba': assert 0 in m.volume_changes and 100 in m.volume_changes
