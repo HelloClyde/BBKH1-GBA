@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "kind": "MIPS BDA with mocked firmware volume services",
+  "sha256": "efda311ebed98e4fb569f7309b7702f5203aa44a7a45fb351cca1dfd6ec4830d",
+  "bounds_clamped": true,
+  "invalid_config_preserved": true,
+  "unsupported_volume_audio_kept": true,
+  "results": [
+    {
+      "kind": "gba",
+      "touch_keyboard": true,
+      "saved_volume": 30,
+      "reopened": true,
+      "v1_migrated": true,
+      "original_system_volume_restored": 37
+    },
+    {
+      "kind": "gb",
+      "touch_keyboard": true,
+      "saved_volume": 30,
+      "reopened": true,
+      "v1_migrated": true,
+      "original_system_volume_restored": 37
+    },
+    {
+      "kind": "gbc",
+      "touch_keyboard": true,
+      "saved_volume": 30,
+      "reopened": true,
+      "v1_migrated": true,
+      "original_system_volume_restored": 37
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "ok": true,
+  "date": "2026-10-11",
+  "environment": "Full H1 V1.41 firmware in QEMU bbkh1",
+  "physical_hardware_tested": false,
+  "bda_sha256": "efda311ebed98e4fb569f7309b7702f5203aa44a7a45fb351cca1dfd6ec4830d",
+  "kernel_sha256": "d05786e442f9aad62a8d0a0cb4f6d786bdc7c2fa353a7a2b152c9ed9f01b40ef",
+  "qemu_sha256": "eebb8dceafd707c90d8dec761eecde6484d412cab040c1604f7cce3e2ae9f4d3",
+  "original_system_volume": 51,
+  "runs": [
+    {
+      "kind": "gba",
+      "loaded_volume": 100,
+      "resumed_frames": 476,
+      "audio_70": {
+        "sample_rate": 32000,
+        "frames": 96397,
+        "seconds": 3.01240625,
+        "min": -5455,
+        "max": 4997,
+        "nonzero_samples": 192794,
+        "packets": 145
+      },
+      "audio_0": {
+        "sample_rate": 32000,
+        "frames": 96869,
+        "seconds": 3.02715625,
+        "min": 0,
+        "max": 0,
+        "nonzero_samples": 0,
+        "packets": 145
+      },
+      "system_volume_restored": 51,
+      "menu_screenshot_sha256": "ec58d8b971f38a44ae4c0f89f19e26fe3da8e2fe938a768f3298d5f4c8c51cf7"
+    },
+    {
+      "kind": "gb",
+      "loaded_volume": 100,
+      "resumed_frames": 441,
+      "system_volume_restored": 51,
+      "menu_screenshot_sha256": "ec58d8b971f38a44ae4c0f89f19e26fe3da8e2fe938a768f3298d5f4c8c51cf7"
+    },
+    {
+      "kind": "gbc",
+      "loaded_volume": 100,
+      "resumed_frames": 437,
+      "system_volume_restored": 51,
+      "menu_screenshot_sha256": "ec58d8b971f38a44ae4c0f89f19e26fe3da8e2fe938a768f3298d5f4c8c51cf7"
+    },
+    {
+      "kind": "gba-reopen",
+      "loaded_volume": 0,
+      "system_volume_restored": 51
+    }
+  ],
+  "status": {
+    "running": false,
+    "returncode": 0,
+    "last_error": null
+  }
+}

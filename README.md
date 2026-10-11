@@ -7,6 +7,7 @@
 
 当前版本 **v0.12.4**：GBA MIPS JIT、原生 PCM 音频、系统文件选择器、加载进度、
 组合按键、触摸暂停菜单、三槽即时存档、GBA RTC，以及 MXU1 加速的保持比例线性平滑缩放。
+本版新增音量调节和关于页面，修正菜单英文显示及取消文件选择后的桌面刷新。
 适配固件 **H1 V1.41**。此前已根据真机日志优化运行耗时；本次发布的确切构建经过
 MIPS 回归和完整固件模拟器验证，**v0.12.4 MXU 路径的真机速度仍待测试**。
 
@@ -85,11 +86,15 @@ Source code ZIP 不包含子模块。完整源码包可直接构建，依赖版�
 | --- | --- |
 | ![精灵宝可梦绿宝石标题画面](assets/screenshots/gba-emerald-title.png) | ![精灵宝可梦绿宝石运行画面](assets/screenshots/gba-emerald-gameplay.png) |
 
-以下菜单截图来自发布构建在完整 H1 固件模拟器中的实际帧缓冲，使用原创 homebrew ROM 测试。
+以下原有菜单截图来自 v0.12.3 构建在完整 H1 固件模拟器中的实际帧缓冲，使用原创 homebrew ROM 测试。
 
 | 触摸暂停菜单（完整 H1 固件模拟器） | 显示设置（完整 H1 固件模拟器） |
 | --- | --- |
 | ![暂停菜单](assets/screenshots/pause-menu.png) | ![显示设置](assets/screenshots/display-options.png) |
+
+v0.12.4 普通版的声音设置，来自完整 H1 固件模拟器的实际帧缓冲：
+
+![声音设置与音量条](assets/screenshots/volume-settings.png)
 
 菜单截图、发布 BDA 哈希及测试范围见 [发布验证记录](docs/release-v0.12.4.md)。
 

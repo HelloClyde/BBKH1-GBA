@@ -29,5 +29,10 @@
     "game": "Pokemon Emerald",
     "environment": "not specified by user",
     "bda_sha256": null
+  },
+  "volume-settings.png": {
+    "sha256": "ec58d8b971f38a44ae4c0f89f19e26fe3da8e2fe938a768f3298d5f4c8c51cf7",
+    "source": "full H1 V1.41 firmware QEMU; GBA homebrew; v0.12.4 normal BDA",
+    "bda_sha256": "efda311ebed98e4fb569f7309b7702f5203aa44a7a45fb351cca1dfd6ec4830d"
   }
 }
