@@ -175,12 +175,12 @@ int h1_app_main(void)
     int logging;
     logging = h1_diag_init();
 #if H1_PROFILE
-    h1_diag("PROFILE_BUILD version=0.12.5 clock=TCU5_RTC init=manual_8_4_4 read=terminal_inclusive start=game_loop dump=batch8k video=split scaler=linear_MXU1_Q8_split4 heartbeat=deferred input=GUI_9D8");
+    h1_diag("PROFILE_BUILD version=0.12.6 clock=TCU5_RTC init=manual_8_4_4 read=terminal_inclusive start=game_loop dump=batch8k video=split scaler=linear_MXU1_Q8_split4 heartbeat=deferred input=GUI_9D8");
 #endif
 #ifdef H1_JIT
-    h1_diag("APP_BEGIN version=0.12.5 diagnostics=1 core=JIT audio=PCM rtc=auto input=GUI_9D8");
+    h1_diag("APP_BEGIN version=0.12.6 diagnostics=1 core=JIT audio=PCM rtc=auto input=GUI_9D8");
 #else
-    h1_diag("APP_BEGIN version=0.12.5 diagnostics=1 core=interpreter audio=PCM rtc=auto input=GUI_9D8");
+    h1_diag("APP_BEGIN version=0.12.6 diagnostics=1 core=interpreter audio=PCM rtc=auto input=GUI_9D8");
 #endif
     if (!logging) h1_message_box(0, "Cannot create A:\\GBA\\h1gba.log. Create the GBA directory and check writable storage.", "H1 GBA log", 0);
     extern int h1_linear_init(void);

@@ -5,12 +5,12 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def main():
     tag=os.environ['GITHUB_REF_NAME'];repo=os.environ['GITHUB_REPOSITORY']
-    if tag!='v0.12.5':raise RuntimeError('Unexpected release tag')
+    if tag!='v0.12.6':raise RuntimeError('Unexpected release tag')
     existing=subprocess.run(['gh','release','view',tag,'--repo',repo],capture_output=True)
     if existing.returncode==0:raise RuntimeError('Release already exists; inspect it before retrying')
     assets=sorted((ROOT/'dist/release').glob('*'))
     assert len(assets)==7
     subprocess.run(['gh','release','create',tag,*map(str,assets),'--repo',repo,'--verify-tag',
-        '--title','GameBoy v0.12.5 · H1 GB/GBC/GBA','--notes-file',str(ROOT/'release/v0.12.5.md')],check=True)
+        '--title','GameBoy v0.12.6 · H1 GB/GBC/GBA','--notes-file',str(ROOT/'release/v0.12.6.md')],check=True)
 
 if __name__=='__main__':main()

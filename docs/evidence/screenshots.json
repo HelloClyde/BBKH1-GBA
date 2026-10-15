@@ -39,5 +39,10 @@
     "sha256": "6033bed54535d053b5f8d0f7ff9aff865eb76f9d734329f3f840244a582db2f4",
     "source": "full H1 V1.41 firmware QEMU; GBA homebrew; v0.12.5 normal BDA",
     "bda_sha256": "735b123fcd95b10eb3e6ebb7ce779722bfd449659ddf6339d441376862c02a65"
+  },
+  "escape-key-binding-v0.12.6.png": {
+    "sha256": "6a17df2d4c2b92826fc2c4f2a04af1a49ce9069397a4ecb56e936c2956a631e2",
+    "source": "full H1 V1.41 firmware QEMU; GBA homebrew; v0.12.6 normal BDA",
+    "bda_sha256": "eae71a71da2ea213d0e9d800577f8e561bbd8946948d167ed020a454ad7572ab"
   }
 }

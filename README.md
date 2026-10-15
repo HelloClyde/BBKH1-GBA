@@ -5,16 +5,17 @@
 [gpSP](https://github.com/libretro/gpsp) 和 [gnuboy](https://github.com/rofl0r/gnuboy)，
 移植参考 [BBK9588-gba](https://github.com/HelloClyde/BBK9588-gba)。
 
-当前版本 **v0.12.5**：GBA MIPS JIT、原生 PCM 音频、系统文件选择器、加载进度、
+当前版本 **v0.12.6**：GBA MIPS JIT、原生 PCM 音频、系统文件选择器、加载进度、
 组合按键、触摸暂停菜单、三槽即时存档、GBA RTC，以及 MXU1 加速的保持比例线性平滑缩放。
-本版把声音设置的音量步长改为 **5%**，触摸加减按钮和实体左右键一致。
+本版将**退出键（Escape）留给游戏**，允许在按键映射中绑定，不触发模拟器退出或暂停。
+触摸或 P 仍打开暂停菜单，音量保留每次 5% 的调节步长。
 适配固件 **H1 V1.41**。此前已根据真机日志优化运行耗时；本次发布的确切构建经过
-MIPS 回归和完整固件模拟器验证，**v0.12.5 MXU 路径的真机速度仍待测试**。
+MIPS 回归和完整固件模拟器验证，**v0.12.6 MXU 路径的真机速度仍待测试**。
 
 ## 快速开始
 
 从 [Releases](https://github.com/HelloClyde/BBKH1-GBA/releases) 下载
-`BBKH1-GBA-v0.12.5-install.zip`，把其中 `应用` 和 `GBA` 目录合并复制到 H1 的 A 盘根目录。
+`BBKH1-GBA-v0.12.6-install.zip`，把其中 `应用` 和 `GBA` 目录合并复制到 H1 的 A 盘根目录。
 应用路径为 `A:\应用\程序\GameBoy.bda`；在系统应用菜单找到 **GameBoy** 后启动。
 也可以下载 `H1GBA.bda`，重命名为 `GameBoy.bda` 后复制到上述目录。
 
@@ -97,7 +98,11 @@ v0.12.5 普通版的声音设置，来自完整 H1 固件模拟器的实际帧�
 
 ![声音设置与 5% 音量按钮](assets/screenshots/volume-settings-v0.12.5.png)
 
-菜单截图、发布 BDA 哈希及测试范围见 [发布验证记录](docs/release-v0.12.5.md)。
+v0.12.6 在完整 H1 固件模拟器中将退出键绑定为游戏 A：
+
+![退出键绑定为游戏 A](assets/screenshots/escape-key-binding-v0.12.6.png)
+
+菜单截图、发布 BDA 哈希及测试范围见 [发布验证记录](docs/release-v0.12.6.md)。
 
 ## 依赖
 

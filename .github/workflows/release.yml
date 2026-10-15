@@ -72,12 +72,12 @@ jobs:
       - name: Require previously recorded runtime validation for tags
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          if ($env:GITHUB_REF_NAME -ne 'v0.12.5') { throw 'Tag does not match this release version' }
+          if ($env:GITHUB_REF_NAME -ne 'v0.12.6') { throw 'Tag does not match this release version' }
           python tools/verify_release.py --require-verified
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
       - name: Package installer, full source, metadata and checksums
         run: |
-          python tools/package_release.py --version v0.12.5
+          python tools/package_release.py --version v0.12.6
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:

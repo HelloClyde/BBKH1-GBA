@@ -13,7 +13,7 @@ def main():
     args=parser.parse_args()
     resources=build_icon_resources(ROOT/'assets/gba-icon.png')
     verified=json.loads((ROOT/'release/verified-builds.json').read_text()) if args.require_verified else None
-    if verified:assert verified['version']=='v0.12.5'
+    if verified:assert verified['version']=='v0.12.6'
     for name in ['H1GBA','H1GBA-profile']:
         bda=ROOT/'dist'/f'{name}.bda'
         data=bda.read_bytes();digest=hashlib.sha256(data).hexdigest()
@@ -24,7 +24,7 @@ def main():
         meta=json.loads(bda.with_suffix('.build.json').read_text())
         assert meta['sha256']==digest and meta['size']==len(data)
         assert meta['profile']==name.endswith('-profile')
-        assert meta['version'].startswith('0.12.5-')
+        assert meta['version'].startswith('0.12.6-')
         assert bda.with_suffix('.bda.sha256').read_text().split()[0]==digest
         if verified:
             record=verified['binaries'][name+'.bda']

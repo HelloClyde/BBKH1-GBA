@@ -1,0 +1,107 @@
+{
+  "ok": true,
+  "date": "2026-10-15",
+  "environment": "Full H1 V1.41 firmware in QEMU",
+  "physical_hardware_tested": false,
+  "bda_sha256": "eae71a71da2ea213d0e9d800577f8e561bbd8946948d167ed020a454ad7572ab",
+  "kernel_sha256": "d05786e442f9aad62a8d0a0cb4f6d786bdc7c2fa353a7a2b152c9ed9f01b40ef",
+  "qemu_sha256": "eebb8dceafd707c90d8dec761eecde6484d412cab040c1604f7cce3e2ae9f4d3",
+  "original_system_volume": 51,
+  "runs": [
+    {
+      "kind": "gba",
+      "unmapped_Escape_frames": 15,
+      "mapping_Escape": 9,
+      "mapping_screenshot_sha256": "6a17df2d4c2b92826fc2c4f2a04af1a49ce9069397a4ecb56e936c2956a631e2",
+      "gameplay": {
+        "frames_before": 331,
+        "frames_held": 346,
+        "frames_released": 364,
+        "core_A_held": 1022,
+        "core_A_released": 1023
+      },
+      "audio": {
+        "sample_rate": 32000,
+        "frames": 95904,
+        "seconds": 2.997,
+        "min": -7903,
+        "max": 7139,
+        "nonzero_samples": 191808,
+        "packets": 143
+      },
+      "Escape_does_not_close_pause_menu": true,
+      "P_opens_pause_menu": true,
+      "system_volume_restored": 51
+    },
+    {
+      "kind": "gb",
+      "unmapped_Escape_frames": 16,
+      "mapping_Escape": 9,
+      "mapping_screenshot_sha256": "6a17df2d4c2b92826fc2c4f2a04af1a49ce9069397a4ecb56e936c2956a631e2",
+      "gameplay": {
+        "frames_before": 300,
+        "frames_held": 315,
+        "frames_released": 333,
+        "core_A_held": 165,
+        "core_A_released": 17
+      },
+      "Escape_does_not_close_pause_menu": true,
+      "P_opens_pause_menu": true,
+      "system_volume_restored": 51
+    },
+    {
+      "kind": "gbc",
+      "unmapped_Escape_frames": 16,
+      "mapping_Escape": 9,
+      "mapping_screenshot_sha256": "6a17df2d4c2b92826fc2c4f2a04af1a49ce9069397a4ecb56e936c2956a631e2",
+      "gameplay": {
+        "frames_before": 285,
+        "frames_held": 300,
+        "frames_released": 307,
+        "core_A_held": 165,
+        "core_A_released": 17
+      },
+      "Escape_does_not_close_pause_menu": true,
+      "P_opens_pause_menu": true,
+      "system_volume_restored": 51
+    },
+    {
+      "kind": "gba-reopen",
+      "mapping_Escape": 9,
+      "gameplay": {
+        "frames_before": 192,
+        "frames_held": 206,
+        "frames_released": 214,
+        "core_A_held": 1022,
+        "core_A_released": 1023
+      },
+      "system_volume_restored": 51
+    }
+  ],
+  "desktop_screenshot_sha256": "aa7c9bd721077b3274b5a35eced1c2c363904fae7c20b90aee278f1f76919de2",
+  "status": {
+    "running": false,
+    "returncode": 0,
+    "last_error": null
+  },
+  "log_sha256": "73c8d2df487bc94a0b704ab37d8768bcf4883e44a3aa39cdde00efb1398524a3",
+  "nand_torn_records": 0,
+  "game_stops": [
+    {
+      "displays": 331,
+      "display_errors": 0
+    },
+    {
+      "displays": 220,
+      "display_errors": 0
+    },
+    {
+      "displays": 205,
+      "display_errors": 0
+    },
+    {
+      "displays": 113,
+      "display_errors": 0
+    }
+  ]
+}

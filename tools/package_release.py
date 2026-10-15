@@ -11,16 +11,16 @@ def tracked(repo):
         if not modepath[0].startswith('160000 '):yield modepath[1]
 
 def add(zipper,name,data):
-    info=zipfile.ZipInfo(name,(2026,10,11,0,0,0))
+    info=zipfile.ZipInfo(name,(2026,10,15,0,0,0))
     info.compress_type=zipfile.ZIP_DEFLATED
     info.external_attr=0o100644<<16
     zipper.writestr(info,data)
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--version',default='v0.12.5')
+    parser.add_argument('--version',default='v0.12.6')
     args=parser.parse_args()
-    if args.version!='v0.12.5':parser.error('Update release metadata and runtime evidence before a new version')
+    if args.version!='v0.12.6':parser.error('Update release metadata and runtime evidence before a new version')
     output=ROOT/'dist/release';output.mkdir(parents=True,exist_ok=True)
     files=[]
     for name in ['H1GBA.bda','H1GBA-profile.bda','H1GBA.build.json','H1GBA-profile.build.json']:

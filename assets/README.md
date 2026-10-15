@@ -44,3 +44,6 @@ GBA《精灵宝可梦 绿宝石》截图，原图直接收录，没有修改。�
 
 `screenshots/volume-settings-v0.12.5.png` 为 v0.12.5 普通版在完整 H1 V1.41 固件
 模拟器中的实际帧缓冲，展示每次 5% 的音量按钮；验证见 `docs/release-v0.12.5.md`。
+
+`screenshots/escape-key-binding-v0.12.6.png` 为 v0.12.6 普通版在完整 H1 V1.41 固件
+模拟器中的实际帧缓冲，展示退出键绑定为游戏 A；验证见 `docs/release-v0.12.6.md`。
