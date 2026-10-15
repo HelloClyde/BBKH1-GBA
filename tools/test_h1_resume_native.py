@@ -68,7 +68,7 @@ def main():
             'frames':last-first if counter else None,'interval_s':round(duration,4),
             'logic_fps':round((last-first)/duration,3) if counter else None,'paused_audio_silent':True,'paused_dma_stopped':dma_stopped})
         print(rows[-1],flush=True)
-    tap(24);time.sleep(4);status=post('/api/stop',{})
+    tap(41);time.sleep(4);status=post('/api/stop',{})
     assert not status['running'] and status['returncode']==0 and not status['last_error']
     report={'label':a.label,'bda_sha256':json.loads((ROOT/'build/h1-emulator-test/image-build.json').read_text(encoding='utf-8'))['bda_sha256'],
         'counter':hex(counter) if counter else None,'cycles':rows,'status':status,

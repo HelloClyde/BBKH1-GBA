@@ -72,7 +72,7 @@ def main():
         subprocess.run([sys.executable,ROOT/'vendor/h1-sdk/scripts/capture_emulator_frame.py',a.output.with_name(a.output.stem+'-linear-game.png')],check=True)
     if a.audio:
         subprocess.run([sys.executable,ROOT/'tools/capture_h1_audio.py',a.audio,'--seconds','8'],check=True)
-    tap(24);time.sleep(4);released=tcu();assert released==before,(released,before)
+    tap(41);time.sleep(4);released=tcu();assert released==before,(released,before)
     status=post('/api/stop',{})
     assert not status['running'] and status['returncode']==0 and not status['last_error']
     report={'environment':'qemu','bda_sha256':json.loads((WORK/'image-build.json').read_text(encoding='utf-8'))['bda_sha256'],

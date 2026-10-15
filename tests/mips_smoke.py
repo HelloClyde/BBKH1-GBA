@@ -253,8 +253,8 @@ class Machine:
             self.injected = True
         if self.menu and self.switch and self.blits >= 10 and not self.switched:
             self.events.append((9, 36)); self.switched = True
-        if self.menu and self.blits >= (20 if self.switch else 10) and not any(e[1] == 24 for e in self.events):
-            self.events.append((9, 24))
+        if self.menu and self.blits >= (20 if self.switch else 10) and not any(e[1] == 41 for e in self.events):
+            self.events.append((9, 41))
         event = self.events.pop(0) if self.events else (-1, -1)
         self.word(code, event[0]); self.word(key, event[1]); return 0
     def clock(self, *a):
@@ -292,7 +292,7 @@ class Machine:
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--bda', type=Path, default=ROOT / 'build/test-20/H1GBA.bda')
-    p.add_argument('--menu', action='store_true', help='Exercise the release native selector and Escape exit')
+    p.add_argument('--menu', action='store_true', help='Exercise the release native selector and Back exit')
     args = p.parse_args()
     first = Machine(args.bda, press_a=True, menu=args.menu); t1 = first.run(); im = first.check_frame(True)
     # Review the actual native framebuffer: the bar advances and reaches full

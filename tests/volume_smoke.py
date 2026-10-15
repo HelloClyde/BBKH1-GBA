@@ -26,7 +26,7 @@ class Volume(Pause):
         elif b'PAUSE_MENU_END action=0' in log:
             if self.after_resume is None:
                 self.after_resume=self.blits;self.resumed_volume=self.system_volume
-            if self.blits-self.after_resume>=6:event=(9,24)
+            if self.blits-self.after_resume>=6:event=(9,41)
         self.word(code,event[0]);self.word(button,event[1]);return 0
 
 def config_blob(data,version,volume):

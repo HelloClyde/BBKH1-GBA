@@ -19,11 +19,12 @@ class Pause(Machine):
         self.write(0x80001900,struct.pack('<6I',0x27bdffa8,0xafbf0050,0,0,0x00a0b821,0x0080b021))
         self.pause_sent=False;self.idle=0;self.mutated=False;self.restored=False
         self.menu_steps=0;self.after_resume=None;self.golden=None;self.about_frame=None
+        self.game_escape_sent=False;self.game_escape_released=False
         self.map_path=map_path;self.cpu_address=symbol('reg' if kind=='gba' else 'h1gb_cpu',map_path)
         self.ram_address=symbol('ewram' if kind=='gba' else 'h1gb_ram',map_path)
         if kind=='gba' and json.loads(bda.with_suffix('.build.json').read_text())['core']=='jit': self.ram_address+=0x40000
         self.actions=([(11,330,230),(8,10,10)]+tap(100,252)+tap(400,254)+key(39)+key(41)+ # About: touch/confirm/back
-            tap(330,80)+tap(70,132)+key(1)+key(41)+ # drag cancels EXIT; A=Q, back
+            tap(330,80)+tap(70,132)+key(24)+key(41)+ # drag cancels EXIT; A=Escape, back
             tap(90,175)+tap(100,72)+tap(100,72)+tap(100,112)+key(41)+ # linear aspect, skip2
             tap(90,130)+tap(100,72)+key(41)+ # state slot1
             tap(330,130)+tap(100,72)+key(41)+ # load slot1
@@ -74,7 +75,11 @@ class Pause(Machine):
                 self.menu_steps+=1
         elif self.restored:
             if self.after_resume is None:self.after_resume=self.blits
-            if self.blits-self.after_resume>=3:event=(9,24)
+            if self.blits>self.after_resume and not self.game_escape_sent:
+                self.game_escape_sent=True;event=(9,24)
+            elif self.blits>self.after_resume+1 and self.game_escape_sent and not self.game_escape_released:
+                self.game_escape_released=True;event=(10,24)
+            elif self.blits-self.after_resume>=3:event=(9,41)
         self.word(code,event[0]);self.word(button,event[1]);return 0
 class ErrorMenu(Pause):
     def __init__(self,*args,**kwargs):
@@ -97,7 +102,7 @@ class ErrorMenu(Pause):
                 event=self.actions.pop(0);self.menu_steps+=1
         elif self.pause_sent:
             if self.resumed_at is None:self.resumed_at=self.blits
-            if self.blits-self.resumed_at>=3:event=(9,24)
+            if self.blits-self.resumed_at>=3:event=(9,41)
         self.word(code,event[0]);self.word(button,event[1]);return 0
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--bda',type=Path,default=ROOT/'dist/H1GBA.bda')
@@ -106,11 +111,13 @@ def main():
     for kind in ['gba','gb','gbc']:
         machine=Pause(args.bda,kind,args.map);seconds=machine.run()
         assert machine.restored and machine.menu_steps>30 and machine.blits>4
+        assert machine.game_escape_sent and machine.game_escape_released
+        assert machine.blits>=machine.after_resume+3
         assert machine.about_frame and machine.files[LOG].count(b'MENU_PAGE page=5')>=2
         path=machine.rom_path
         cfg=machine.files[path+'.cfg.s0'];assert zlib.crc32(cfg[28:])==struct.unpack_from('<I',cfg,20)[0]
         fields=struct.unpack_from('<5I',cfg,28);assert fields[2:]==(3,2,0),fields
-        assert cfg[28+20+1]==9 and cfg[28+20+16]==0 and cfg[28+20+39]==0
+        assert cfg[28+20+24]==9 and cfg[28+20+16]==0 and cfg[28+20+39]==0
         assert path+'.st1.s0' in machine.files
         pixels=struct.unpack('<130560I',machine.menu_frames[1]);im=Image.new('RGB',(480,272))
         im.putdata([((p>>16)&255,(p>>8)&255,p&255) for p in pixels]);im.save(out/('pause-'+kind+'.png'))

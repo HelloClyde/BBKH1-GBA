@@ -22,7 +22,7 @@ class Repeated(Machine):
         elif self.blits>=self.next_pause:
             if self.pauses<3:
                 self.pauses+=1;self.next_pause=self.blits+6;self.step=0;event=(9,31)
-            else:event=(9,24)
+            else:event=(9,41)
         self.word(code,event[0]);self.word(button,event[1]);return 0
 def main():
     m=Repeated(ROOT/'dist/H1GBA.bda');m.run()

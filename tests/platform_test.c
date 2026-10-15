@@ -109,11 +109,19 @@ int main(void)
     input_event(&input,0,H1_KEY_V);input_event(&input,1,H1_KEY_V);assert(input.scale==H1_SCALE_NATIVE);
     input_mapping_defaults(&input);
     assert(input_map_button(&input, RETRO_DEVICE_ID_JOYPAD_A, H1_KEY_Q));
-    assert(!input_map_button(&input, RETRO_DEVICE_ID_JOYPAD_A, H1_KEY_ESCAPE));
+    assert(!input_key_reserved(H1_KEY_ESCAPE));
     input_event(&input,1,H1_KEY_Q);assert(input.mask & (1u<<RETRO_DEVICE_ID_JOYPAD_A));
     input_event(&input,0,H1_KEY_Q);input_event(&input,1,H1_KEY_Z);assert(!input.mask);
     input_event(&input,1,31);assert(input.pause_requested);
-    input_event(&input, 1, H1_KEY_ESCAPE); assert(input.exit_requested);
+    input.pause_requested=0;
+    input_event(&input,1,H1_KEY_ESCAPE);assert(!input.exit_requested && !input.pause_requested);
+    input_event(&input,0,H1_KEY_ESCAPE);
+    assert(input_map_button(&input,RETRO_DEVICE_ID_JOYPAD_A,H1_KEY_ESCAPE));
+    input_event(&input,1,H1_KEY_ESCAPE);
+    assert(input.mask==(1u<<RETRO_DEVICE_ID_JOYPAD_A) && !input.exit_requested && !input.pause_requested);
+    input_event(&input,0,H1_KEY_ESCAPE);assert(!input.mask);
+    assert(!input_map_button(&input,RETRO_DEVICE_ID_JOYPAD_A,H1_KEY_BACK));
+    input_event(&input,1,H1_KEY_BACK);assert(input.exit_requested);
     {
         input_state combo={0};
         assert(input_map_button(&combo,RETRO_DEVICE_ID_JOYPAD_RIGHT,10)); /* D */
@@ -135,6 +143,24 @@ int main(void)
         physical_keys[31]=1;input_frame(&combo);assert(combo.pause_requested);
         combo.pause_requested=0;input_frame(&combo);assert(!combo.pause_requested);
         memset(physical_keys,0,45);input_frame(&combo);assert(!combo.mask);
+        /* Escape and Back share native code 1. Game Escape must not become Back. */
+        assert(input_map_button(&combo,RETRO_DEVICE_ID_JOYPAD_A,H1_KEY_ESCAPE));
+        physical_keys[H1_KEY_ESCAPE]=1;queued_code=9;queued_key=H1_KEY_ESCAPE;
+        input_frame(&combo);
+        assert(combo.mask==(1u<<RETRO_DEVICE_ID_JOYPAD_A));
+        assert(combo.held[H1_KEY_ESCAPE] && !combo.held[H1_KEY_BACK]);
+        assert(!combo.exit_requested && !combo.pause_requested);
+        input_frame(&combo);assert(!combo.exit_requested && !combo.pause_requested);
+        memset(physical_keys,0,45);input_frame(&combo);assert(!combo.mask);
+        physical_keys[H1_KEY_BACK]=1;queued_code=9;queued_key=H1_KEY_BACK;
+        input_frame(&combo);assert(combo.exit_requested && !combo.mask);
+        assert(combo.held[H1_KEY_BACK] && !combo.held[H1_KEY_ESCAPE]);
+        /* A missed release between samples must not turn new Escape into exit. */
+        combo.exit_requested=0;physical_keys[H1_KEY_BACK]=0;physical_keys[H1_KEY_ESCAPE]=1;
+        input_frame(&combo);assert(!combo.exit_requested && !combo.pause_requested);
+        queued_code=9;queued_key=H1_KEY_ESCAPE;input_frame(&combo);
+        assert(combo.mask==(1u<<RETRO_DEVICE_ID_JOYPAD_A) && !combo.exit_requested);
+        memset(physical_keys,0,45);input_frame(&combo);
         input_state aliases={0};
         physical_keys[H1_KEY_ENTER]=1;queued_code=9;queued_key=H1_KEY_ENTER;input_frame(&aliases);
         assert(aliases.mask==(1u<<RETRO_DEVICE_ID_JOYPAD_START));

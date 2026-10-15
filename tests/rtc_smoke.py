@@ -12,7 +12,7 @@ from make_rtc_test_rom import make_rtc_rom
 ROM='A:\\GBA\\RTCTEST.gba'
 class Machine(BaseMachine):
     def __init__(self,*args,**kwargs):
-        kwargs['menu']=True  # Exercise Escape exit with unbounded release packages too.
+        kwargs['menu']=True  # Exercise Back exit with unbounded release packages too.
         super().__init__(*args,**kwargs)
 class ClockWarning(Machine):
     def message(self,parent,text,title,flags,*args):

@@ -73,7 +73,7 @@ def main():
         if name=='gba':audio(name)
         results.append(result)
         (OUT/'v07-native-interaction.json').write_text(json.dumps(results,indent=2)+'\n',encoding='utf-8')
-        tap(24 if name=='gba' else 36);time.sleep(4)
+        tap(41 if name=='gba' else 36);time.sleep(4)
         capture('exit' if name=='gba' else name+'-picker')
     post('/api/stop',{})
     print('PASS native GB/GBC audio, A/right/release, save restore, GBA switch and exit',flush=True)

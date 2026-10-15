@@ -38,7 +38,7 @@ class Switch(Machine):
         return super().select_file(*args)
     def event(self,code,key,*args):
         if self.blits-self.start_blits>=10 and not self.exit_sent:
-            self.exit_sent=True; self.events.append((9,24 if self.chosen==4 else 36))
+            self.exit_sent=True; self.events.append((9,41 if self.chosen==4 else 36))
         event=self.events.pop(0) if self.events else (-1,-1)
         self.word(code,event[0]); self.word(key,event[1]);return 0
 

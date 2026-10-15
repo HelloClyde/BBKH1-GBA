@@ -160,7 +160,7 @@ int h1_pause_menu(input_state *s,h1_config *c,const h1_core *core,const char *ro
             if (code==H1_EVENT_KEY_UP) { held[key]=0;continue; }
             if (held[key]) continue;
             held[key]=1;
-            back=key==H1_KEY_ESCAPE || key==H1_KEY_BACK || key==H1_KEY_P;
+            back=key==H1_KEY_BACK || key==H1_KEY_P;
             if (capture>=0) {
                 if (back) { capture=-1;status="已取消"; }
                 else if (input_map_button(s,logical[capture],key)) { capture=-1;status="按键已修改"; }

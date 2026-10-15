@@ -42,7 +42,7 @@ static int key_button(int key)
 }
 int input_key_reserved(unsigned key)
 {
-    return !key || key > 44 || key == H1_KEY_ESCAPE || key == H1_KEY_BACK ||
+    return !key || key > 44 || key == H1_KEY_BACK ||
         key == H1_KEY_M || key == H1_KEY_V || key == H1_KEY_F || key == 31 || key == 44;
 }
 void input_mapping_defaults(input_state *s)
@@ -76,7 +76,7 @@ void input_event(input_state *s, int pressed, int key)
         if (s->held[i] && b >= 0) s->mask |= 1u << b;
     }
     if (!edge) return;
-    if (key == H1_KEY_ESCAPE || key == H1_KEY_BACK) s->exit_requested = 1;
+    if (key == H1_KEY_BACK) s->exit_requested = 1;
     if (key == 31) s->pause_requested = 1;
     if (key == H1_KEY_M) s->menu_requested = 1;
     if (key == H1_KEY_V) { s->scale = (s->scale + 1) % H1_SCALE_COUNT; s->scale_changed = 1; }
@@ -100,12 +100,15 @@ void input_frame(input_state *s)
             if (!down_codes[code]) alias_owner[code]=0;
         }
         int down=down_codes[code];
-        /* Enter/Confirm and the Alt/direction pairs share native scancodes.
+        /* Escape/Back, Enter/Confirm and the Alt/direction pairs share scancodes.
          * Use the queue's physical identity for these aliases, while the
          * native query remains authoritative for whether the group is held. */
-        if (code==28 || code==105 || code==106)
+        if (code==1 || code==28 || code==105 || code==106)
             down=down && (alias_owner[code] ? alias_owner[code]==key :
-                key==(code==28 ? H1_KEY_ENTER : code==105 ? H1_KEY_LEFT : H1_KEY_RIGHT));
+                key==(code==1 ? H1_KEY_ESCAPE : code==28 ? H1_KEY_ENTER : code==105 ? H1_KEY_LEFT : H1_KEY_RIGHT));
+        /* Shared code 1 cannot identify Back by itself. Only a real Back
+         * queue event may request exit; a stale alias owner must not exit. */
+        if (key==H1_KEY_BACK) { s->held[key]=(uint8_t)down;continue; }
         if (s->held[key]!=down) input_event(s,down,(int)key);
     }
 }
@@ -120,10 +123,11 @@ void input_poll(input_state *s)
         if (code == 11) { s->pause_requested=1; break; }
         if (code==H1_EVENT_KEY_DOWN && key>=1 && key<=42) {
             unsigned native=h1_game_key_code((unsigned)key);
-            if (native==28 || native==105 || native==106) alias_owner[native]=(uint8_t)key;
+            if (native==1 || native==28 || native==105 || native==106) alias_owner[native]=(uint8_t)key;
         }
         /* GUI's single-key queue must not overwrite the native game query. */
-        if (game_input_active && key>=1 && key<=42) continue;
+        if (game_input_active && key>=1 && key<=42 && key!=H1_KEY_BACK) continue;
+        if (code==H1_EVENT_KEY_DOWN && key==H1_KEY_BACK) s->exit_requested=1;
         if (code == H1_EVENT_KEY_DOWN || code == H1_EVENT_KEY_UP)
             input_event(s, code == H1_EVENT_KEY_DOWN, key);
     }
