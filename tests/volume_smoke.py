@@ -21,13 +21,23 @@ class Volume(Pause):
                 self.volume_frame=self.read(0x82000000,480*272*4)
             assert self.actions,'Unexpected menu remains open'
             action=self.actions.pop(0);event=action[:2]
-            if action[0] in (8,11):
+            if len(action)==3:
                 self.write(0x80007008,struct.pack('<2H',action[1],action[2]));event=(action[0],0)
         elif b'PAUSE_MENU_END action=0' in log:
             if self.after_resume is None:
                 self.after_resume=self.blits;self.resumed_volume=self.system_volume
             if self.blits-self.after_resume>=6:event=(9,41)
         self.word(code,event[0]);self.word(button,event[1]);return 0
+
+class SliderVolume(Volume):
+    def __init__(self,bda,kind):
+        super().__init__(bda,kind)
+        self.actions=(tap(330,175)+tap(38,232)+tap(441,232)+
+            [(11,240,232),(-1,340,232),(-1,340,232),
+             (-1,479,100),(-1,0,75),(8,159,75)]+ # drag outside; release over sound toggle
+            [(11,100,260),(-1,441,232),(8,441,232)]+ # start outside: no slider capture
+            [(11,120,112),(-1,441,232),(8,441,232)]+ # drag off minus: no action
+            tap(120,112)+tap(120,152)+key(40)+key(35)+key(41)+tap(90,80))
 
 def config_blob(data,version,volume):
     blob=bytearray(data);struct.pack_into('<I',blob,32,version);blob[28+65]=volume
@@ -38,6 +48,14 @@ def main():
     bda=ROOT/'dist/H1GBA.bda';out=ROOT/'build/verification';out.mkdir(exist_ok=True)
     results=[]
     for kind in ('gba','gb','gbc'):
+        slider=SliderVolume(bda,kind);slider.run()
+        # Intermediate values must reach firmware before pen-up, including
+        # movement delivered with no event, clamping and stationary repeats.
+        assert slider.volume_changes==[100,0,100,50,75,100,0,30,25,30,25,30,37],slider.volume_changes
+        assert slider.resumed_volume==30 and slider.system_volume==37
+        slider_cfg=slider.files[slider.rom_path+'.cfg.s0']
+        assert struct.unpack_from('<I',slider_cfg,44)[0]==1 # release did not toggle sound
+        assert slider_cfg[28+65]==30
         m=Volume(bda,kind);m.run();path=m.rom_path;cfg=path+'.cfg.s0'
         assert m.resumed_volume==30 and m.system_volume==37
         # Touch and keyboard use 5% steps; only the final system restore is exempt.
@@ -63,7 +81,7 @@ def main():
             unavailable.word(0x80001a00,0);unavailable.run()
             assert not unavailable.volume_changes and unavailable.audio_submissions
             assert b'AUDIO_VOLUME unavailable=1' in unavailable.files[LOG]
-        results.append({'kind':kind,'touch_keyboard':True,'saved_volume':30,'reopened':True,
+        results.append({'kind':kind,'touch_keyboard':True,'slider_drag_live':True,'saved_volume':30,'reopened':True,
                         'v1_migrated':True,'original_system_volume_restored':37})
     report={'ok':True,'kind':'MIPS BDA with mocked firmware volume services',
             'sha256':hashlib.sha256(bda.read_bytes()).hexdigest(),'bounds_clamped':True,

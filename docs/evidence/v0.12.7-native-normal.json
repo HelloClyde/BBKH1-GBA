@@ -1,0 +1,36 @@
+{
+  "ok": true,
+  "date": "2026-10-16",
+  "environment": "Full H1 V1.41 firmware QEMU",
+  "physical_hardware_tested": false,
+  "bda_sha256": "491c99b8c9901a69cb675f0b8d6d6d62892e6fdf345fe37597ba9691420015e0",
+  "kernel_sha256": "d05786e442f9aad62a8d0a0cb4f6d786bdc7c2fa353a7a2b152c9ed9f01b40ef",
+  "qemu_sha256": "eebb8dceafd707c90d8dec761eecde6484d412cab040c1604f7cce3e2ae9f4d3",
+  "menu_screenshot_sha256": "42396645a8933d951687c58f460865ef1550df4c9371bb5d5e7d8de6286fb4f4",
+  "held_drag_values": [
+    50,
+    75,
+    100,
+    0,
+    30
+  ],
+  "saved_and_reopened_volume": 30,
+  "original_system_volume_restored": 51,
+  "status": {
+    "running": false,
+    "returncode": 0,
+    "last_error": null
+  },
+  "log_sha256": "89367b0c6b826a4f3b5e811f2287169f67aa7f4b6f03c142b790bc1b6b4bd0df",
+  "nand_torn_records": 0,
+  "game_stops": [
+    {
+      "displays": 243,
+      "display_errors": 0
+    },
+    {
+      "displays": 129,
+      "display_errors": 0
+    }
+  ]
+}

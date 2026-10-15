@@ -88,6 +88,16 @@ static int hit(int page,int x,int y)
     }
     return -1;
 }
+enum { VOLUME_X=38, VOLUME_WIDTH=404, VOLUME_Y=226 };
+static int volume_hit(int x,int y)
+{ return x>=VOLUME_X-12 && x<VOLUME_X+VOLUME_WIDTH+12 && y>=214 && y<250; }
+static unsigned volume_at(int x)
+{
+    int span=VOLUME_WIDTH-1,position=x-VOLUME_X;
+    if (position<0) position=0;
+    if (position>span) position=span;
+    return ((position*20+span/2)/span)*5;
+}
 static void draw(int page,int cursor,int capture,const char *status,const input_state *s,const h1_config *c)
 {
     static const char *titles[]={"游戏已暂停","按键映射","即时存档","即时读档","显示设置","关于 GameBoy","声音设置"};
@@ -96,8 +106,11 @@ static void draw(int page,int cursor,int capture,const char *status,const input_
     char label[96];
     rect(0,0,480,272,0x0843);text(titles[page],18,8,0xffff);
     if (page==6 && !(status&&*status)) {
-        snprintf(label,sizeof label,"音量：%u%%  左右键调节",c->volume);text(label,18,32,0xbdf7);
-        rect(38,226,404,12,0x2128);rect(38,226,(int)(404*c->volume/100),12,0x05b4);
+        snprintf(label,sizeof label,"音量：%u%%  左右键／触摸调节",c->volume);text(label,18,32,0xbdf7);
+        rect(VOLUME_X,VOLUME_Y,VOLUME_WIDTH,12,0x2128);
+        rect(VOLUME_X,VOLUME_Y,(int)(VOLUME_WIDTH*c->volume/100),12,0x05b4);
+        int thumb=VOLUME_X+(VOLUME_WIDTH-1)*c->volume/100;
+        rect(thumb-4,VOLUME_Y-4,9,20,0xffff);
     } else text(page==5?"确认／返回回到暂停菜单":capture>=0?"请按实体键，返回取消":status&&*status?status:"触摸选择，方向键／确认，返回继续",18,32,0xbdf7);
     if (page==5) {
         text("作者：HelloClyde",38,60,0xffff);
@@ -139,7 +152,7 @@ static void draw(int page,int cursor,int capture,const char *status,const input_
 }
 int h1_pause_menu(input_state *s,h1_config *c,const h1_core *core,const char *rom,uint16_t *screen)
 {
-    int page=0,cursor=0,capture=-1,pen=-1,dirty=1,result=0;
+    int page=0,cursor=0,capture=-1,pen=-1,dirty=1,result=0,volume_drag=0;
     uint8_t held[45]={0};
     memcpy(held,s->held,sizeof held);
     const char *status=c->enabled?"":"设置文件损坏，本次不写入";
@@ -149,6 +162,24 @@ int h1_pause_menu(input_state *s,h1_config *c,const h1_core *core,const char *ro
         if (dirty) { draw(page,cursor,capture,status,s,c);dirty=0; }
         int code=-1,key=-1,activate=0,back=0,x=0,y=0;
         h1_event_fetch(&code,&key);
+        if (code==11 && page==6 && !volume_drag && h1_touch_position(&x,&y) && volume_hit(x,y)) {
+            volume_drag=1;pen=-1;
+        }
+        if (volume_drag) {
+            /* Poll calibrated ADC coordinates while held: movement need not
+             * produce a GUI event. Keep ownership until pen-up, even outside
+             * the track, so release cannot activate another menu button. */
+            if (h1_touch_position(&x,&y)) {
+                unsigned volume=volume_at(x);
+                if (c->volume!=volume) {
+                    c->volume=volume;gba_audio_set_volume(c->volume);dirty=1;
+                }
+            }
+            status="";
+            if (code==H1_EVENT_KEY_UP && key>=1 && key<=44) held[key]=0;
+            if (code==8) volume_drag=0;
+            continue;
+        }
         if (code==11) {
             pen=h1_touch_position(&x,&y)?hit(page,x,y):-1;
             if (pen>=0 && capture<0) { cursor=pen;dirty=1; }

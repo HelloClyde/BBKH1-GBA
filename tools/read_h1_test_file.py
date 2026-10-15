@@ -19,7 +19,9 @@ class H1Nand:
             if first[0] != 255 or tag >> 16 != 65535 or tag == 0xffffffff:
                 continue
             last_page, sequence = struct.unpack_from('<H', first, 2)[0], struct.unpack_from('<H', first, 58)[0]
-            if first[1] != 0 or last_page >= PAGES:
+            # A sparse unit can leave page zero erased while its metadata
+            # points to a committed last page. Validate that tail as well.
+            if first[1] not in (0, 255) or last_page >= PAGES:
                 self.torn += 1
                 continue
             last = self.oob(physical, last_page)

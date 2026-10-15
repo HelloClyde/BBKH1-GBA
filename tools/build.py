@@ -161,7 +161,7 @@ def main():
     padding = (-size) & 3
     fields = HeaderFields(category=0x48, file_size_minus_4=size + padding - 4,
                           payload_offset=PAYLOAD_OFFSET, resource_offset=RESOURCE_OFFSET, resource_sizes=RESOURCE_SIZES)
-    data = encode_header(fields, title="GameBoy", build_time="2026-10-15 00:00:00") + resources + payload + bytes(padding)
+    data = encode_header(fields, title="GameBoy", build_time="2026-10-16 00:00:00") + resources + payload + bytes(padding)
     dest = build / "H1GBA.bda"
     dest.write_bytes(data)
     report = validate_bda(dest)
@@ -169,7 +169,7 @@ def main():
     digest = hashlib.sha256(data).hexdigest()
     metadata = {"title": "GameBoy", "profile": args.profile, "sha256": digest, "size": len(data), "sdk_commit": SDK_COMMIT, "gpsp_commit": CORE_COMMIT,
                 "entry_va": "0x83c00020", "core": args.core, "audio": "H1 native PCM 32000 Hz mono",
-                "gnuboy_commit": GB_COMMIT, "formats": ["gba", "gb", "gbc"], "version": "0.12.6-linear-mxu-profile" if args.profile else "0.12.6-linear-mxu", "gba_rtc": "autodetect; H1 RTC; .rtc.s0/.rtc.s1", "benchmark": args.benchmark, "verbose_log":args.verbose_log, "log_path": "A:\\GBA\\h1gba.log",
+                "gnuboy_commit": GB_COMMIT, "formats": ["gba", "gb", "gbc"], "version": "0.12.7-linear-mxu-profile" if args.profile else "0.12.7-linear-mxu", "gba_rtc": "autodetect; H1 RTC; .rtc.s0/.rtc.s1", "benchmark": args.benchmark, "verbose_log":args.verbose_log, "log_path": "A:\\GBA\\h1gba.log",
                 "rom_selector": "H1 GUI+0x9EC; native game window GUI+0x84C/+0x850",
                 "pause_menu": "touch or P; calibrated coordinates GUI+0x6C0",
                 "instant_state_slots": 3, "config": "per-ROM .cfg.s0/.s1",

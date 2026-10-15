@@ -44,5 +44,10 @@
     "sha256": "6a17df2d4c2b92826fc2c4f2a04af1a49ce9069397a4ecb56e936c2956a631e2",
     "source": "full H1 V1.41 firmware QEMU; GBA homebrew; v0.12.6 normal BDA",
     "bda_sha256": "eae71a71da2ea213d0e9d800577f8e561bbd8946948d167ed020a454ad7572ab"
+  },
+  "volume-slider-v0.12.7.png": {
+    "sha256": "42396645a8933d951687c58f460865ef1550df4c9371bb5d5e7d8de6286fb4f4",
+    "source": "full H1 V1.41 firmware QEMU; GBA homebrew; v0.12.7 normal BDA",
+    "bda_sha256": "491c99b8c9901a69cb675f0b8d6d6d62892e6fdf345fe37597ba9691420015e0"
   }
 }
